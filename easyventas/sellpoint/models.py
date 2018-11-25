@@ -29,9 +29,11 @@ class Proveedores_Clientes(models.Model):
 	nombre_comencial = models.CharField(max_length=255)
 	rfc				 = models.CharField(max_length=18)
 	direccion 		 = models.CharField(max_length=255)
+	tipo 			 = models.BooleanField()
+
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.rfc)
 
 class Productos_Proveedores(models.Model):
 	producto 		 = models.ForeignKey(Productos, on_delete=models.CASCADE)
@@ -49,7 +51,7 @@ class Compras(models.Model):
 	impuestos 		= models.FloatField()
 	total 			= models.FloatField()
 	fecha_entrega	= models.DateField()
-	proveedor 		= models.ForeignKey(Proveedores_Clientes,on_delete=models.CASCADE)  
+	proveedor 		= models.ForeignKey(Proveedores_Clientes,on_delete=models.CASCADE, blank= True)  
 
 	def __str__(slef):
 		return str(self.id)
