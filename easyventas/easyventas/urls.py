@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from sellpoint import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.login ,name="index"),
+    path('dashboard/', views.index ,name="index"),
+    path('', admin.site.urls),
+    path('articulos/', admin.site.urls),
+    path('productos/', admin.site.urls),
 ]
