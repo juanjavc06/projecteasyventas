@@ -54,7 +54,7 @@ ROOT_URLCONF = 'easyventas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['views'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    # Don't Will be Serve
+    os.path.join(BASE_DIR, "assets"),
+]
+
+# Will be Serve
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static-serve")
