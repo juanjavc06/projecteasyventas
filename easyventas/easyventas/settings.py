@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sellpoint',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sellpoint',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root123',
         'HOST': 'localhost', 
         'PORT': '3306',
     }
