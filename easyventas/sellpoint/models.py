@@ -4,6 +4,7 @@ from django.conf import settings
 # Create your models here.
 
 
+#--------------------------Seccion adan----------------------------------------------------
 class Productos(models.Model):
 	nombre 				= models.CharField(max_length=200)
 	descripcion 		= models.CharField(max_length=500)
@@ -86,10 +87,7 @@ class Ventas_Detalle(models.Model):
 		return str(self.id)
 
 
-
-
-
-
+#--------------------------Seccion Jenny no tocar :v ---------------------------------------
 
 class Perfiles(models.Model):
 	perfil 			= models.CharField(max_length=100)
