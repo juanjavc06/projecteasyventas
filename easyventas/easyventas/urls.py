@@ -23,5 +23,6 @@ urlpatterns = [
     path('dashboard/', views.index ,name="index"),
     path('', admin.site.urls),
     path('articulos/', admin.site.urls),
-    path('productos/', admin.site.urls),
+    path('crear_productos/', views.crear_producto, name="crear_producto_view"),
+
 ]
