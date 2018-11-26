@@ -7,3 +7,6 @@ def index(request):
 
 def login(request):
 	return render(request, "forms/login.html")
+
+def startSellPoint(request):
+	return render(request, "dashboard/sellpoint.html")

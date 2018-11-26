@@ -1,0 +1,116 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static  'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/fonts/circular-std/style.css' %}">
+    <link rel="stylesheet" href="{% static  'libs/css/style.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/charts/chartist-bundle/chartist.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/charts/morris-bundle/morris.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/charts/c3charts/c3.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/fonts/flag-icon-css/flag-icon.min.css' %}">
+    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper" id="wrapper">
+        <!-- ============================================================== -->
+        <!-- navbar -->
+        <!-- ============================================================== -->
+        {% include "sections/navbarsellpoint.html" %}
+        <!-- ============================================================== -->
+        <!-- end navbar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        {% block content %}
+
+        {% endblock %}
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+        {% include "sections/sidebarsellpoint.html" %}
+    
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 -->
+    <script src="{% static  'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <!-- bootstap bundle js -->
+    <script src="{% static  'vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <!-- slimscroll js -->
+    <script src="{% static  'vendor/slimscroll/jquery.slimscroll.js' %}"></script>
+    <!-- main js -->
+    <script src="{% static  'libs/js/main-js.js' %}"></script>
+    <!-- chart chartist js -->
+    <script src="{% static  'vendor/charts/chartist-bundle/chartist.min.js' %}"></script>
+    <!-- sparkline js -->
+    <script src="{% static  'vendor/charts/sparkline/jquery.sparkline.js' %}"></script>
+    <!-- morris js -->
+    <script src="{% static  'vendor/charts/morris-bundle/raphael.min.js' %}"></script>
+    <script src="{% static  'vendor/charts/morris-bundle/morris.js' %}"></script>
+    <!-- chart c3 js -->
+    <script src="{% static  'vendor/charts/c3charts/c3.min.js' %}"></script>
+    <script src="{% static  'vendor/charts/c3charts/d3-5.4.0.min.js' %}"></script>
+    <script src="{% static  'vendor/charts/c3charts/C3chartjs.js' %}"></script>
+    <script src="{% static  'libs/js/dashboard-ecommerce.js' %}"></script>
+    <script>
+    $("#menu-toggle").click(function(e) {
+        //e.preventDefault();
+        if ($("#navbarNav").css("width")=="0px") {
+            $("#navbarNav").animate({width: "350px"},50);
+            $("#content-sellpoint").animate({marginRight: "350px"},50);
+
+        }else{
+            $("#content-sellpoint").animate({marginRight: "0px"},50);
+            $("#navbarNav").animate({width: "0px"},50);
+
+        }
+    });
+    $('#sidebar-nav a').click(function (e) {
+  		e.preventDefault()
+  		$(this).tab('show')
+	})
+/*
+
+*/
+    $(document).keypress(function(evt){
+        if ($(':focus').attr("id") != "code-id-producto" && $("#navbarNav").css("width")!="0px") {
+            var patt = /[0-9]|\/|\*|\-|\+/i;
+            if (String.fromCharCode(evt.keyCode).match(patt)) {
+                $("#code-id-producto").val($("#code-id-producto").val() + String.fromCharCode(evt.keyCode));
+            }
+        }
+    });
+
+    $(document).keyup(function(evt){
+        if ($(':focus').attr("id") != "code-id-producto") {
+            if (evt.keyCode == 127) {
+                $("#code-id-producto").val("");
+            }
+            if (evt.keyCode == 8) {
+                $("#code-id-producto").val( $("#code-id-producto").val().slice(0, -1));
+            }
+        }
+    });
+
+    $("[name=number]").click(function(){
+        $("#code-id-producto").val($("#code-id-producto").val() + $(this).attr("data-value"));
+    });
+    </script>
+</body>
+
+</html>

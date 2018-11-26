@@ -18,10 +18,10 @@ from django.urls import path
 from sellpoint import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('login/', views.login ,name="index"),
     path('dashboard/', views.index ,name="index"),
     path('', admin.site.urls),
     path('articulos/', admin.site.urls),
+    path('sellpoint/', views.startSellPoint),
     path('productos/', admin.site.urls),
 ]
