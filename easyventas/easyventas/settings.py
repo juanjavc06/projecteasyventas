@@ -80,7 +80,11 @@ DATABASES = {
         'NAME': 'sellpoint',
         'USER': 'root',
         'PASSWORD': 'root123',
+<<<<<<< HEAD
         'HOST': 'localhost',
+=======
+        'HOST': 'localhost', 
+>>>>>>> 3bcae0ee53cb407dbb47df5f5af6e871c7b84321
         'PORT': '3306',
     }
 }
