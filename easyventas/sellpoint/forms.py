@@ -6,7 +6,7 @@ class FormProductos(forms.ModelForm):
 	class Meta:
 		model 	= Productos
 		fields 	= '__all__'
-		widgets	= {'descripcion':forms.Textarea(attrs={'cols':50,'rows':5})}
+		widgets	= {'descripcion':forms.Textarea(attrs={'cols':30,'rows':3})}
 
 class FormCategoria_Productos(forms.ModelForm):
 

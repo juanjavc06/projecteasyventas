@@ -22,11 +22,8 @@ urlpatterns = [
     path('dashboard/', views.index ,name="index"),
     path('', admin.site.urls),
     path('articulos/', admin.site.urls),
-<<<<<<< HEAD
     path('sellpoint/', views.startSellPoint),
     path('productos/', admin.site.urls),
-=======
-    path('crear_productos/', views.crear_producto, name="crear_producto_view"),
+    path('productos/crear_productos/', views.crear_producto, name="producto_crear_view"),
 
->>>>>>> 3bcae0ee53cb407dbb47df5f5af6e871c7b84321
 ]

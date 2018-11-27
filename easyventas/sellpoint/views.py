@@ -11,7 +11,7 @@ def crear_producto(request):
 	form = FormProductos(request.POST)
 	context = {	'form':form	}
 
-	return render(request,"templates/ecommerce-product-single.html", context)
+	return render(request,"dashboard/productos_crear.html", context)
 
 
 
