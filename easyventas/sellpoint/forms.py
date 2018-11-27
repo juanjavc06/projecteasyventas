@@ -46,16 +46,12 @@ class FormVentas(forms.ModelForm):
 
 
 
-class FormVentas_Detalle (forms.ModelForm):	
+class FormVentas_Detalle (forms.ModelForm):
 	class Meta:
 		model 	= Ventas_Detalle
 		fields	= '__all__'
 
-
-
-
 #-------------------------------------------Seccion Jenny--------------------------------------------------
-
 class FormPerfiles(forms.ModelForm):
 
 	class Meta:
@@ -95,7 +91,7 @@ class FormMovimientos(forms.ModelForm):
 		fields	= '__all__'
 
 class FormCorte(forms.ModelForm):
-	
+
 	class Meta:
-		model      = Corte 
+		model      = Corte
 		fields     = '__all__'
