@@ -52,3 +52,50 @@ class FormVentas_Detalle (forms.ModelForm):
 		fields	= '__all__'
 
 
+
+
+#-------------------------------------------Seccion Jenny--------------------------------------------------
+
+class FormPerfiles(forms.ModelForm):
+
+	class Meta:
+		model  = Perfiles
+		fields = '__all__'
+
+class FormUsuarios(forms.ModelForm):
+
+	class Meta:
+		model  = Usuarios
+		fields = '__all__'
+
+class FormZona(forms.ModelForm):
+
+	class Meta:
+		model  = Zona
+		fields = '__all__'
+
+
+class FormInventario(forms.ModelForm):
+
+	class Meta:
+		model  = Inventario
+		fields = '__all__'
+
+class FormAlmacen(forms.ModelForm):
+
+	class Meta:
+		model   = Almacen
+		fields	= '__all__'
+
+
+class FormMovimientos(forms.ModelForm):
+
+	class Meta:
+		model   = Movimientos
+		fields	= '__all__'
+
+class FormCorte(forms.ModelForm):
+	
+	class Meta:
+		model      = Corte 
+		fields     = '__all__'
