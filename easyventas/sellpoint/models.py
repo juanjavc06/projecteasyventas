@@ -11,7 +11,7 @@ class Productos(models.Model):
 	unidad_medida 		= models.CharField(max_length=4)
 	inventario_minimo	= models.FloatField()
 	inventario_maximo	= models.FloatField()
-	imagen 				= models.BinaryField(blank=True)
+	imagen 				= models.BinaryField(blank=False)
 	precio 				= models.FloatField()
 
 	def __str__(self):
@@ -48,11 +48,11 @@ class Productos_Proveedores(models.Model):
 
 class Compras(models.Model):
 	fecha 			= models.DateField(auto_now_add=True)
-	sub_total		= models.FloatField() 
+	sub_total		= models.FloatField()
 	impuestos 		= models.FloatField()
 	total 			= models.FloatField()
 	fecha_entrega	= models.DateField()
-	proveedor 		= models.ForeignKey(Proveedores_Clientes,on_delete=models.CASCADE, blank= True)  
+	proveedor 		= models.ForeignKey(Proveedores_Clientes,on_delete=models.CASCADE, blank= True)
 
 	def __str__(slef):
 		return str(self.id)
@@ -69,7 +69,7 @@ class  Compras_Detalle(models.Model):
 
 class Ventas(models.Model):
 	fecha 	 		= models.DateTimeField(auto_now_add=True)
-	sub_total		= models.FloatField() 
+	sub_total		= models.FloatField()
 	impuestos 		= models.FloatField()
 	total 			= models.FloatField()
 	cliente 		= models.ForeignKey(Proveedores_Clientes, on_delete=models.CASCADE, blank = True)
@@ -157,5 +157,3 @@ class Detalle_Corte(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-
-

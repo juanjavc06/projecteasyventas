@@ -1,6 +1,6 @@
 {% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
 {% block title %}Dashboard{% endblock %}
-{% load crispy_forms_tags %}
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="dashboard-ecommerce">
@@ -15,19 +15,45 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end pageheader  -->
-            <!-- ============================================================== -->
             <div class="ecommerce-widget">
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div class="card">
                             <h5 class="card-header">Productos</h5>
                             <div class="card-body">
-                              <form method="post">
+                              <form method="post" action="{% url 'productos_nuevo' %}">
                                 {% csrf_token %}
-                                {{ form }}
-                                <button type="submit" class="btn btn-success">Save person</button>
+                                <div class="form-group">
+                                  <label for="input-select">Nombre del Producto:</label>
+                                  {{ form.nombre|add_class:"form-control"|attr:"type:text" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Descripcion del Producto:</label>
+                                  {{ form.descripcion|add_class:"form-control" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Unidad de Medida:</label>
+                                  {{ form.unidad_medida|add_class:"form-control"|attr:"type:number" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Inventario Minimo:</label>
+                                  {{ form.inventario_minimo|add_class:"form-control"|attr:"type:number" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Inventario Maximo:</label>
+                                  {{ form.inventario_maximo|add_class:"form-control"|attr:"type:number" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Inventario Precio:</label>
+                                  {{ form.precio|add_class:"form-control"|attr:"type:number" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Imagen de Producto:</label>
+                                  <input type="file" class="form-control" name="imagen">
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                  <button class="btn btn-primary" type="submit">Enviar</button>
+                                </div>
                               </form>
                             </div>
                         </div>

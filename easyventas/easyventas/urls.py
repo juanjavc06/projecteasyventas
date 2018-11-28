@@ -23,7 +23,6 @@ urlpatterns = [
     path('', admin.site.urls),
     path('articulos/', admin.site.urls),
     path('sellpoint/', views.startSellPoint),
-    path('productos/', admin.site.urls),
-    path('productos/nuevo/', views.form_productos_view, name="producto_crear_view"),
+    path('productos/nuevo/', views.form_productos_view, name="productos_nuevo"),
 
 ]

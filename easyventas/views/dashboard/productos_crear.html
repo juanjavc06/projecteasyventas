@@ -1,7 +1,6 @@
 {% extends "base_dashboard.html" %}
-
+{% load widget_tweaks %}
 {% block title %}Dashboard{% endblock %}
-
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="dashboard-ecommerce">
@@ -21,7 +20,7 @@
                                 </ol>
                             </nav>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <!-- ============================================================== -->
@@ -32,29 +31,29 @@
 
             	<form class="form" method="POST"  action="" >
 				{% csrf_token %}
-				
+
  			<div class="row">
                 <div class="col">
                 <h3><span class="label label-primary">Nombre: </span></h3>
-                 {{form.nombre}} 
-                
+                 {{form.nombre}}
+
                 </div>
                 <div ">
 
-                
-                
+
+
 
                 </div>
-                 
+
             </div>
-				
+
 				<div class="row">
 					<div class="col">
 					<h3>
             	    	<span class="label label-primary"> Descripcion :</span>
-    		            {{form.descripcion}}	
+    		            {{form.descripcion}}
 	                </h3>
-				</div>	
+				</div>
 			</div>
 
 			<div class="row">
@@ -67,17 +66,17 @@
 					<h3><span class="label label-primary">Inv. minimo: </span></h3>
 						{{form.inventario_minimo}}
 				</div>
-				
+
 				<div class="col">
 					<h3><span class="label label-primary"> Inv. maximo </span></h3>
 					{{form.inventario_maximo}}
 				</div>
-				
+
 				<div class="col">
 					<h3><span class="label label-primary">Precio: </span></h3>
 					{{form.precio}}
 				</div>
-				
+
 
 			</div>
 

@@ -2,14 +2,21 @@ from django import forms
 from .models import *
 
 class FormProductos(forms.ModelForm):
-
 	class Meta:
 		model 	= Productos
 		fields 	= '__all__'
-		widgets	= {'descripcion':forms.Textarea(attrs={'cols':30,'rows':3})}
+		widgets	= {
+			'descripcion':forms.Textarea(
+				attrs={
+					'cols':30,
+					'rows':3
+				}
+			),
+			'imagen':forms.FileInput()
+		}
+
 
 class FormCategoria_Productos(forms.ModelForm):
-
 	class Meta:
 		model 	= Productos
 		fields 	= '__all__'
