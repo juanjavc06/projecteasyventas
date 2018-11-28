@@ -1,6 +1,6 @@
 {% extends "base_dashboard.html" %}
 {% block title %}Dashboard{% endblock %}
-{% load crispy_forms_tags %}
+
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="dashboard-ecommerce">
@@ -27,7 +27,7 @@
                               <form method="post">
                                 {% csrf_token %}
                                 {{ form }}
-                                <button type="submit" class="btn btn-success">Save person</button>
+                                <button type="submit" class="btn btn-success">Save Producto</button>
                               </form>
                             </div>
                         </div>
