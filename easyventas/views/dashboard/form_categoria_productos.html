@@ -1,0 +1,78 @@
+{% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Categorias Productos</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ecommerce-widget">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="card">
+                            <h5 class="card-header">Productos</h5>
+                            <div class="card-body">
+                              <form method="POST" action="{% url 'categoria_nueva_view' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                  <label for="input-select">Nombre categoria:</label>
+                                  {{ form.nombre|add_class:"form-control"|attr:"type:text" }}
+                                </div>
+                                <div class="form-group">
+                                  <label for="input-select">Descripcion :</label>
+                                  {{ form.descripcion|add_class:"form-control" }}
+                                </div>
+                               
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                  <button class="btn btn-primary" type="submit">Enviar</button>
+                                </div>
+                      
+                              </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                  <h5 class="card-header"> Categorias Registradas</h5>
+                 
+                </div>
+                 <div class="row">
+                    
+                 
+                      <table>
+                        <thead>
+                          <tr>
+                              <th>Categoria</th>
+                              <th> Descripcion</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                          {% for cat in lista %}
+                          <tr>
+                            <td>{{cat.nombre}}</td>
+                            <td>{{cat.descripcion}}</td>
+                          </tr>
+
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                   </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

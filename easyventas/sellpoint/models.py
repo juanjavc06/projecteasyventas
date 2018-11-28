@@ -4,6 +4,13 @@ from django.conf import settings
 # Create your models here.
 
 
+class Categoria_Productos(models.Model):
+	nombre 			= models.CharField(max_length=50)
+	descripcion 	= models.CharField(max_length=255)
+
+	def __str__(self):
+		return str(self.nombre)
+
 #--------------------------Seccion adan----------------------------------------------------
 class Productos(models.Model):
 	nombre 				= models.CharField(max_length=200)
@@ -13,17 +20,11 @@ class Productos(models.Model):
 	inventario_maximo	= models.FloatField()
 	imagen 				= models.BinaryField(blank=False)
 	precio 				= models.FloatField()
-
+	categoria  			= models.ForeignKey(Categoria_Productos, on_delete=models.CASCADE)
 	def __str__(self):
 		return str(self.nombre)
 
 
-class Categoria_Productos(models.Model):
-	nombre 			= models.CharField(max_length=50)
-	descripcion 	= models.CharField(max_length=255)
-
-	def __str__(self):
-		return str(self.nombre)
 
 
 class Proveedores_Clientes(models.Model):

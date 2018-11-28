@@ -15,10 +15,16 @@ def login(request):
 def startSellPoint(request):
 	return render(request, "dashboard/sellpoint.html")
 
-def crear_producto(request):
-	form = FormProductos(request.POST)
-	context = {	'form':form	}
-	return render(request,"dashboard/productos_crear.html", context)
+def form_categorias_view(request):
+	form = FormCategoria_Productos(request.POST)
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+		
+	queryset = Categoria_Productos.objects.all()
+	context = {	'form':form	,'lista':queryset}
+	
+	return render(request,"dashboard/form_categoria_productos.html", context)
 
 def form_productos_view(request):
 	form = FormProductos(request.POST)
