@@ -93,7 +93,7 @@ class Perfiles(models.Model):
 	perfil 			= models.CharField(max_length=100)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.perfil)
 
 
 class Usuarios(models.Model):
@@ -103,14 +103,14 @@ class Usuarios(models.Model):
 	perfil 			= models.ForeignKey(Perfiles,on_delete=models.CASCADE)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.usuarios)
 
 
 class Zona(models.Model):
 	zona 			= models.CharField(max_length=255)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.zona)
 
 class Inventario(models.Model):
 	existencias 	= models.IntegerField()
@@ -125,7 +125,7 @@ class Almacen(models.Model):
 	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE)
 
 	def __str__(self):
-		return str(self.id)
+		return str(self.almacen)
 
 class Movimientos(models.Model):
 	tipo 			= models.CharField(max_length=255)

@@ -1,6 +1,10 @@
 {% extends "base_dashboard.html" %}
 {% load widget_tweaks %}
 {% block title %}Dashboard{% endblock %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd21d716f40919d2b4c39e9e7179cef45701cdcc
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="dashboard-ecommerce">
@@ -23,6 +27,7 @@
                             <div class="card-body">
                               <form method="post" action="{% url 'productos_nuevo' %}">
                                 {% csrf_token %}
+<<<<<<< HEAD
                                 <div class="form-group">
                                   <label for="input-select">Nombre del Producto:</label>
                                   {{ form.nombre|add_class:"form-control"|attr:"type:text" }}
@@ -54,6 +59,10 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                                   <button class="btn btn-primary" type="submit">Enviar</button>
                                 </div>
+=======
+                                {{ form }}
+                                <button type="submit" class="btn btn-success">Save Producto</button>
+>>>>>>> fd21d716f40919d2b4c39e9e7179cef45701cdcc
                               </form>
                             </div>
                         </div>
