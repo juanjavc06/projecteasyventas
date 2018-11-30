@@ -25,11 +25,11 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                   <label for="input-select">Nombre categoria:</label>
-                                  {{ form.nombre|add_class:"form-control"|attr:"type:text" }}
+                                  {{ form.categoria|add_class:"form-control"|attr:"type:text" }}
                                 </div>
                                 <div class="form-group">
                                   <label for="input-select">Descripcion :</label>
-                                  {{ form.descripcion|add_class:"form-control" }}
+                                  {{ form.descripcion_categoria|add_class:"form-control" }}
                                 </div>
                                
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
@@ -51,7 +51,7 @@
                  <div class="row">
                     
                  
-                      <table>
+                      <table class="table table-striped table-hover table-white">
                         <thead>
                           <tr>
                               <th>Categoria</th>
@@ -63,8 +63,8 @@
                           
                           {% for cat in lista %}
                           <tr>
-                            <td>{{cat.nombre}}</td>
-                            <td>{{cat.descripcion}}</td>
+                            <td>{{cat.categoria}}</td>
+                            <td>{{cat.descripcion_categoria}}</td>
                           </tr>
 
                           {% endfor %}

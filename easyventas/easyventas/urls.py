@@ -21,7 +21,6 @@ from sellpoint import urls as sellpoint_urls
 urlpatterns = [
     path('login/', views.login ,name="index"),
     path('dashboard/', views.index ,name="index"),
-    path('', admin.site.urls),
     path('articulos/', admin.site.urls),
     path('sellpoint/', views.startSellPoint),
     path('productos/nuevo/', views.form_productos_view, name="productos_nuevo"),

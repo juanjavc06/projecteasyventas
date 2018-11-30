@@ -10,44 +10,62 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'sellpoint' %}">CAJA</a>
                     </li>
-                    <li class="nav-divider"> Menu </li>
-                    <li class="nav-item ">
-                      <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="provedores-clientes">
-                        <i class="fa fa-fw fa-user-circle"></i>
-                        Provedores/Clientes <span class="badge badge-success">6</span>
-                      </a>
-                      <div id="provedores-clientes" class="collapse submenu" style="">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="dashboard-finance.html">General</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="dashboard-sales.html">Provedores</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="dashboard-sales.html">Clientes</a>
-                          </li>
-                        </ul>
-                      </div>
-                      <li class="nav-item ">
-                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1">
-                          <i class="fa fa-fw fa-user-circle"></i>
-                          Provedores/Clientes <span class="badge badge-success">6</span>
-                        </a>
-                        <div id="submenu-1" class="collapse submenu" style="">
-                          <ul class="nav flex-column">
-                            <li class="nav-item">
-                              <a class="nav-link" href="dashboard-finance.html">General</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="dashboard-sales.html">Provedores</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="dashboard-sales.html">Clientes</a>
-                            </li>
-                          </ul>
-                        </div>
-                    </li>
+                    <li class="nav-divider"> Catalogos </li>
+                    <!--- CATALOGOS-->
+                              <!--------------------------- PRODUCTOS----------------->
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-productos" aria-controls="submenu-1">
+                                          <i class="fa fa-apple"></i>
+                                          Productos <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-productos" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'producto_nuevo' %}">Crear Producto</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'producto_buscar' %}">Editar Productos</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+                                     <!-------------------------------- CATEGORIAS-->
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-categorias" aria-controls="submenu-1">
+                                          <i class="fa fa-folder"></i>
+                                          Categorias <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-categorias" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'categoria_nueva_view' %}">Crear Categoria</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+
+
+                                      <!--- PROVEEDORES------------------------>
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-proveedores" aria-controls="submenu-1">
+                                          <i class="fa fa-truck"></i>
+                                          Provedores/Clientes <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-proveedores" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="dashboard-finance.html">Crear Cliente/Proveedor</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="dashboard-sales.html">Editar Cliente/Proveedor</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+
+                    
+                     
+
                     <li class="nav-divider">
                         Reportes
                     </li>

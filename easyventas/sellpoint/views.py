@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from django.views import generic
+from django.db.models import Q
+from django.core import serializers
 
+from django.http import JsonResponse, HttpResponse
 
 from  .models import *
 from .forms import *
@@ -20,6 +24,7 @@ def form_categorias_view(request):
 	if request.method == 'POST':
 		if form.is_valid():
 			form.save()
+			form = FormCategoria_Productos()
 		
 	queryset = Categoria_Productos.objects.all()
 	context = {	'form':form	,'lista':queryset}
@@ -28,8 +33,36 @@ def form_categorias_view(request):
 
 def form_productos_view(request):
 	form = FormProductos(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormProductos()
+
 	context = {	'form':form	}
 	return render(request,"dashboard/form_productos.html", context)
+
+
+def productos_buscar(request):
+	queryset = Productos.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Productos.objects.filter(Q(nombre__icontains = filtro) | Q(descripcion__icontains = filtro))
+			for dt in data:
+				datos.append({"nombre": str(dt.nombre), 'descripcion': str(dt.descripcion), 'precio':str(dt.precio), 'id':int(dt.id)})
+		else:
+			return render(request, 'dashboard/form_productos_buscar.html',{'form': queryset})
+
+	return HttpResponse(str(datos))
+
+class form_productos_editar(generic.UpdateView):
+    template_name = 'dashboard/form_productos_editar.html'
+    model = Productos
+    fields = '__all__'
+    success_url = '../../../productos/buscar/'
+		
+
 
 #-------------------------Seccion Jenny -------------------------------------------
 

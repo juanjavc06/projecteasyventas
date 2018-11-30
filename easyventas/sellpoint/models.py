@@ -5,11 +5,11 @@ from django.conf import settings
 
 
 class Categoria_Productos(models.Model):
-	nombre 			= models.CharField(max_length=50)
-	descripcion 	= models.CharField(max_length=255)
+	categoria 			= models.CharField(max_length=50)
+	descripcion_categoria 		= models.CharField(max_length=255)
 
 	def __str__(self):
-		return str(self.nombre)
+		return str(self.categoria)
 
 #--------------------------Seccion adan----------------------------------------------------
 class Productos(models.Model):
@@ -18,9 +18,10 @@ class Productos(models.Model):
 	unidad_medida 		= models.CharField(max_length=4)
 	inventario_minimo	= models.FloatField()
 	inventario_maximo	= models.FloatField()
-	imagen 				= models.BinaryField(blank=False)
+	imagen 				= models.BinaryField(blank=True)
 	precio 				= models.FloatField()
-	categoria  			= models.ForeignKey(Categoria_Productos, on_delete=models.CASCADE)
+	categoria 	        = models.ForeignKey(Categoria_Productos, on_delete=models.CASCADE)
+
 	def __str__(self):
 		return str(self.nombre)
 

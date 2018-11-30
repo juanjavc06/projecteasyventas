@@ -10,6 +10,8 @@ urlpatterns = [
     path('sellpoint/', views.startSellPoint,name="sellpoint"),
     path('categorias/nuevo/', views.form_categorias_view, name="categoria_nueva_view"),
     path('productos/nuevo/', views.form_productos_view, name="producto_nuevo"),
+    path('productos/buscar/', views.productos_buscar, name="producto_buscar"),
+    path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),
     path('usuarios/nuevo/',views.usuario, name="usuarios_nuevo"),
     path('zona/nueva/',views.zona,name="zona_nueva"),
 

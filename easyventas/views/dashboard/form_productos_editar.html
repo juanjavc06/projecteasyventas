@@ -11,17 +11,26 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
-                        <h2 class="pageheader-title">Nuevo Proveedor/Cliente </h2>
+                        <h2 class="pageheader-title">Editar Producto</h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Productos</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Crear Producto</li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="ecommerce-widget">
-                <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <div class="card">
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+
+           <div class="card">
                             <h5 class="card-header">Productos</h5>
                             <div class="card-body">
-                              <form method="post" action="{% url 'productos_nuevo' %}">
+                              <form method="POST" action="">
                                 {% csrf_token %}
                                 <div class="form-group">
                                   <label for="input-select">Nombre del Producto:</label>
@@ -44,7 +53,7 @@
                                   {{ form.inventario_maximo|add_class:"form-control"|attr:"type:number" }}
                                 </div>
                                 <div class="form-group">
-                                  <label for="input-select">Inventario Precio:</label>
+                                  <label for="input-select">Precio:</label>
                                   {{ form.precio|add_class:"form-control"|attr:"type:number" }}
                                 </div>
                                   <div class="form-group">
@@ -53,19 +62,16 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="input-select">Imagen de Producto:</label>
-                                  <input type="file" class="form-control" name="imagen">
+                                  {{ form.imagen }}
                                 </div>
                              
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                                  <button class="btn btn-primary" type="submit">Enviar</button>
+                                  <button class="btn btn-primary" type="submit">Guardar</button>
                                 </div>
-                                <button type="submit" class="btn btn-success">Save Producto</button>
+                                
                               </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
