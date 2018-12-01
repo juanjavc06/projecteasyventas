@@ -29,7 +29,7 @@ class Productos(models.Model):
 
 
 class Proveedores_Clientes(models.Model):
-	nombre_comencial = models.CharField(max_length=255)
+	nombre_comercial = models.CharField(max_length=255)
 	rfc				 = models.CharField(max_length=18)
 	direccion 		 = models.CharField(max_length=255)
 	tipo 			 = models.BooleanField()

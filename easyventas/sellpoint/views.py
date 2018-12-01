@@ -32,6 +32,8 @@ def form_categorias_view(request):
 	
 	return render(request,"dashboard/form_categoria_productos.html", context)
 
+#-------------------PRODUCTOS------
+
 def form_productos_view(request):
 	form = FormProductos(request.POST)
 	if form.is_valid():
@@ -77,6 +79,41 @@ class form_productos_editar(generic.UpdateView):
     fields = '__all__'
     success_url = '../../../productos/buscar/'
 		
+#-----------------PROVEEDORES---------------
+def form_proveedores_view(request):
+	form = FormProveedores_Clientes(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormProveedores_Clientes()
+
+	context = {	'form':form	}
+	return render(request,"dashboard/form_proveedores_clientes.html", context)
+
+def proveedores_buscar(request):
+	queryset = Proveedores_Clientes.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Proveedores_Clientes.objects.filter(Q(rfc__icontains = filtro) | Q(nombre_comercial__icontains = filtro))
+			for dt in data:
+				datos.append({"rfc": str(dt.rfc), 'nombre_comercial': str(dt.nombre_comercial), 'tipo': str(dt.tipo),'id':int(dt.id)})
+		else:
+			return render(request, 'dashboard/form_proveedores.html',{'form': queryset})
+
+	return HttpResponse(str(datos))
+
+
+class form_proveedores_editar(generic.UpdateView):
+    template_name = 'dashboard/form_proveedor_editar.html'
+    model = Proveedores_Clientes
+    fields = '__all__'
+    success_url = '../../../proveedores/'
+
+#------------RELACION PRODUCTOS PROVEEDORES
+
+
 
 
 #-------------------------Seccion Jenny -------------------------------------------
