@@ -119,15 +119,37 @@ class form_proveedores_editar(generic.UpdateView):
 #-------------------------Seccion Jenny -------------------------------------------
 
 #USUARIOS 
+#Funcion para dar de alta un usuario
 def usuario(request):
 	form = FormUsuarios(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormUsuarios()
+
 	return render(request,"dashboard/form_usuarios.html",{'form': form})
 
-#Actualizar Usuario
-def actualizar_usuario(request, id=1):
-	form = FormUsuarios(request.POST)
-	return render(request,"dashboard/actualizar_usuario.html",{'form': form})
+#Funcion para buscar un usuario
+def usuarios_buscar(request):
+	queryset = Usuarios.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Usuarios.objects.filter(Q(usuarios__icontains = filtro) | Q(perfil__icontains = filtro))
+			for dt in data:
+				datos.append({"usuarios": str(dt.usuarios), 'nombre': str(dt.nombre), 'password':str(dt.password),'perfil':str(dt.perfil), 'id':int(dt.id)})
+		else:
+			return render(request, 'dashboard/form_usuarios.html',{'form': queryset})
 
+	return HttpResponse(str(datos))	
+
+#Actualizar Usuario
+class usuario_editar(generic.UpdateView):
+	template_name   = 'dashboard/form_usuarios_editar.html'
+	model           = Usuarios
+	fields          = '__all__'
+	success_url     = '../../../usuarios/buscar/'
 
 #PERFILES
 def perfiles(request):
@@ -145,12 +167,69 @@ def crear_corte(request):
 	form = FormCortes(request.POST)
 	return render(request,"dashboard/corte.html",{'form': form})
 
+
 #INVENTARIO
+#Funcion para dar de alta inventario
 def inventario(request):
 	form = FormInventario(request.POST)
-	return render(request,"dashboard/inventario.html",{'form':form})
+	if form.is_valid():
+		form.save()
+		form = FormInventario()
+
+	return render(request,"dashboard/form_inventario.html",{'form':form})
+
+#Funcion para buscar inventario por producto
+def inventario_buscar(request):
+	queryset = Inventario.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Inventario.objects.filter(Q(producto__icontains = filtro))
+			for dt in data:
+				datos.append({"existencias": str(dt.existencias), 'producto': str(dt.producto), 'zona':str(dt.zona), 'id':int(dt.id)})
+		else:
+			return render(request, 'dashboard/form_inventario.html',{'form': queryset})
+
+	return HttpResponse(str(datos))	
+
+#Funcion para actualizar el inventario	
+class inventario_editar(generic.UpdateView):
+	template_name   = 'dashboard/form_inventario_editar.html'
+	model           = Inventario
+	fields          = '__all__'
+	success_url     = '../../../inventario/buscar/'
+
 
 #ALMACEN
+#Funcion para agregar un almacen
 def almacen(request):
 	form = FormAlmacen(request.POST)
-	return render(request,"dashboard/almacen.html",{'form': form})
+	if form.is_valid():
+		form.save()
+		form = FormAlmacen()
+	return render(request,"dashboard/form_almacen.html",{'form': form})
+
+#Funcion para editar un almacen
+class almacen_editar(generic.UpdateView):
+	template_name   = 'dashboard/form_inventario_editar.html'
+	model           = Almacen
+	fields          = '__all__'
+	success_url     = '../../../almacen/buscar/'	
+
+#funcion para buscar un almacen por zona
+def almacen_buscar(request):
+	queryset = Almacen.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Almacen.objects.filter(Q(Almacen__icontains = filtro))
+			for dt in data:
+				datos.append({"almacen": str(dt.almacen), 'zona': str(dt.zona), 'id':int(dt.id)})
+		else:
+			return render(request, 'dashboard/form_almacen.html',{'form': queryset})
+
+	return HttpResponse(str(datos))	
