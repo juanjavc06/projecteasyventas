@@ -3,6 +3,14 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+                                <style>
+                                    .qty{
+                                        width: 40px;
+                                        display: inline;
+                                        padding-left: 3px;
+                                        padding-right: 3px;
+                                    }
+                                </style>
 <div class="dashboard-wrapper" id="content-sellpoint" style="margin-left: 0px;margin-right: 350px;">
     <div class="dashboard-ecommerce">
         <div class="container-fluid dashboard-content ">
@@ -12,14 +20,8 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
-                        <h2 class="pageheader-title">Lista de Productos</h2>
+                        <h2 class="pageheader-title">Producto</h2>
                         <div class="page-breadcrumb">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Productos</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Lista de Productos</li>
-                                </ol>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -32,41 +34,31 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div class="card">
                             <h5 class="card-header">Productos</h5>
-                          <!--
-                          id
-                          nombre
-                          descripcion
-                          unidadmedidad
-                          inventario
-                          cantidad actual
-                          imagen
-                          acciones
-                          -->
                             <div class="card-body">
-                                <table class="table">
+                                <table class="table" id="car-shop">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Nombre</th>
-                                            <th scope="col">Descripcion</th>
-                                            <th scope="col">Cantidad Actual</th>
-                                            <th scope="col">Unidad de Medida</th>
-                                            <th scope="col">Imagen</th>
-                                            <th scope="col">Acciones</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <th scope="row"><a>3</a></th>
                                             <td>Gansitos</td>
-                                            <td>Pastel de Chocolate</td>
-                                            <td>45</td>
-                                            <td>unidades</td>
-                                            <td><img src="https://www.superama.com.mx/Content/images/products/img_large/0750100015310L.jpg" style="width:70px;"></td>
+                                            <td>15.25</td>
                                             <td>
-                                              <div class="btn-group">
-                                                <a href="#" class="btn btn-primary active">Eliminar</a>
-                                                <a href="#" class="btn btn-primary active">Editar</a>
+                                                <button href="#" class="btn mdi mdi-arrow-left-bold less-more"></button>
+                                                <input class="form-control qty" value="3">
+                                                <button href="#" class="btn mdi mdi-arrow-right-bold less-more"></button></td>
+                                            <td>45.75</td>
+                                            <td>
+                                              <div class="btn-group">   
+                                                <button href="#" class="btn btn-danger active  mdi mdi-close delete-product"></button>
                                               </div>
                                             </td>
                                         </tr>
@@ -80,4 +72,21 @@
         </div>
     </div>
 </div>
+<style>
+    #car-shop td strong{
+        vertical-align: middle;
+        font-size: 30px;
+    }
+    #car-shop button.btn{
+        font-size: 25px;
+    }
+    #car-shop button.btn.less-more{
+        padding: 2px 5px;
+        margin:5px;
+    }
+    #car-shop button.btn.delete-product{
+        padding: 5px 10px;
+    }
+</style>
+
 {% endblock %}

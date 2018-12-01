@@ -5,8 +5,9 @@ from django.core import serializers
 
 from django.http import JsonResponse, HttpResponse
 
+
 from  .models import *
-from .forms import *
+from .forms import * 
 
 # Create your views here.
 
@@ -54,6 +55,20 @@ def productos_buscar(request):
 		else:
 			return render(request, 'dashboard/form_productos_buscar.html',{'form': queryset})
 
+	return HttpResponse(str(datos))
+
+
+def get_products_by_id(request):
+	queryset = Productos.objects.all()
+	datos = []
+	if request.method == 'GET':
+		id_ = request.GET.get('id')
+		if id_ is not None:
+			data =  Productos.objects.filter(Q(id__icontains = id_))
+			for dt in data:
+				datos.append({"id": str(dt.id),"nombre": str(dt.nombre), 'descripcion': str(dt.descripcion), 'precio':str(dt.precio), 'id':int(dt.id)})
+		else:
+			HttpResponse("SETDATA")
 	return HttpResponse(str(datos))
 
 class form_productos_editar(generic.UpdateView):

@@ -56,7 +56,7 @@ class Compras(models.Model):
 	fecha_entrega	= models.DateField()
 	proveedor 		= models.ForeignKey(Proveedores_Clientes,on_delete=models.CASCADE, blank= True)
 
-	def __str__(slef):
+	def __str__(self):
 		return str(self.id)
 
 class  Compras_Detalle(models.Model):

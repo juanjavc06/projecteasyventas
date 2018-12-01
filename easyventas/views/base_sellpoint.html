@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static  'vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static  'vendor/charts/c3charts/c3.css' %}">
     <link rel="stylesheet" href="{% static  'vendor/fonts/flag-icon-css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static  'vendor/jquery-ui/jquery-ui.min.css' %}">
     <title>Caja</title>
 </head>
 
@@ -41,7 +42,30 @@
         <!-- end wrapper  -->
         <!-- ============================================================== -->
         {% include "sections/sidebarsellpoint.html" %}
-    
+        <div class="footer" style="position: fixed;bottom: 0px;height: 140px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" id="informacion-compra-div">
+                        <table class="table" id="informacion-compra">
+                            <tbody>
+                                <tr>
+                                    <td>Sub-Total:</td>
+                                    <td>15.25</td>
+                                </tr>
+                                <tr>
+                                    <td>Impuestos:</td>
+                                    <td>15.25</td>
+                                </tr>
+                                <tr>
+                                    <td>Total:</td>
+                                    <td>15.25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </div>
+            </div>
+        </div>    
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
@@ -67,49 +91,121 @@
     <script src="{% static  'vendor/charts/c3charts/d3-5.4.0.min.js' %}"></script>
     <script src="{% static  'vendor/charts/c3charts/C3chartjs.js' %}"></script>
     <script src="{% static  'libs/js/dashboard-ecommerce.js' %}"></script>
+    <script src="{% static  'vendor/jquery-ui/jquery-ui.min.js' %}"></script>
     <script>
     $("#menu-toggle").click(function(e) {
         //e.preventDefault();
         if ($("#navbarNav").css("width")=="0px") {
             $("#navbarNav").animate({width: "350px"},50);
             $("#content-sellpoint").animate({marginRight: "350px"},50);
-
+            $("#informacion-compra-div").switchClass(
+                "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12",
+                "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12", 50, "easeInOutQuad" );
+            //col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12
         }else{
             $("#content-sellpoint").animate({marginRight: "0px"},50);
             $("#navbarNav").animate({width: "0px"},50);
-
+            $("#informacion-compra-div").switchClass(
+                "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12",
+                "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12", 50, "easeInOutQuad" );
         }
     });
+
     $('#sidebar-nav a').click(function (e) {
   		e.preventDefault()
   		$(this).tab('show')
-	})
-/*
+	});
 
-*/
+
+
+
     $(document).keypress(function(evt){
         if ($(':focus').attr("id") != "code-id-producto" && $("#navbarNav").css("width")!="0px") {
             var patt = /[0-9]|\/|\*|\-|\+/i;
             if (String.fromCharCode(evt.keyCode).match(patt)) {
                 $("#code-id-producto").val($("#code-id-producto").val() + String.fromCharCode(evt.keyCode));
+                productosId();
             }
         }
     });
 
     $(document).keyup(function(evt){
-        if ($(':focus').attr("id") != "code-id-producto") {
+        console.log(evt.keyCode);
+        /*if ($(':focus').attr("id") != "code-id-producto") {
             if (evt.keyCode == 127) {
                 $("#code-id-producto").val("");
             }
             if (evt.keyCode == 8) {
                 $("#code-id-producto").val( $("#code-id-producto").val().slice(0, -1));
             }
-        }
+            
+        }*/
     });
 
-    $("[name=number]").click(function(){
-        $("#code-id-producto").val($("#code-id-producto").val() + $(this).attr("data-value"));
+    $("#code-id-producto").on('input',function(e){
+        buscar_producto_por_id($(this).val());
     });
+
+    var compras = [];
+    function concuir_compra(){
+    }
+
+    var jsonvar = "";
+
+    /*function buscar_praoducto_por_id(id){
+        if (id !== "")
+            $.ajax({
+            url: "{% url 'productos_getbyid' %}",
+            type: "GET",
+            data: {id : id},
+            success: function(data){
+                console.log(data);
+                jsonvar = JSON.parse(data);
+            }
+        });
+    }*/
+
+    var data = null;
+    function buscar_producto_por_id(id){
+        var x = new XMLHttpRequest();
+        x.open('GET','{% url 'productos_getbyid' %}?id='+ id)
+        x.onreadystatechange = function (e){
+            if(x.readyState == 4){
+                if(x.status === 200){
+                    x.addEventListener('load', function(e){
+                        data = JSON.parse(x.responseText.replace(/\'/g,'"'))[0];
+                    });
+                }
+            }
+        }
+        x.send();
+        return data;
+    }
+
+/*  if (data.length > 0) {
+    $("#result_").html("");
+    $("#calculator_data").slideUp();
+    var row = data[0];
+    $("#code-id-producto").attr("data-id-product",data[0]);
+}else{
+    $("#result_").html("No se encontro");
+    $("#code-id-producto").attr("data-id-product","");
+}*/
+
+    function agregar_producto(id){
+
+    }
+    function eliminar_producto(id){
+
+    }
+    function agregar_un_oproducto(id){
+
+    }
+    function eliminar_un_producto(id){
+
+    }
+
+
     </script>
 </body>
 
