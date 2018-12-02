@@ -1,0 +1,75 @@
+{% extends "base_sellpoint.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block style %} {% endblock %}
+
+
+{% block content %}
+<div class="dashboard-wrapper" id="content-sellpoint" style="margin-left: 0px;margin-right: 350px;">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Producto</h2>
+                        <div class="page-breadcrumb">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="ecommerce-widget">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="card">
+                            <h5 class="card-header">Productos</h5>
+                            <div class="card-body">
+                                <table class="table" id="car-shop">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><a>3</a></th>
+                                            <td>Gansitos</td>
+                                            <td>15.25</td>
+                                            <td>
+                                                <button href="#" class="btn mdi mdi-arrow-left-bold less-more"></button>
+                                                <input class="form-control qty" value="3">
+                                                <button href="#" class="btn mdi mdi-arrow-right-bold less-more"></button></td>
+                                            <td>45.75</td>
+                                            <td>
+                                              <div class="btn-group">   
+                                                <button href="#" class="btn btn-danger active  mdi mdi-close delete-product"></button>
+                                              </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+var productos_getbyid = '{% url 'productos_getbyid' %}';
+</script>
+{% endblock %}

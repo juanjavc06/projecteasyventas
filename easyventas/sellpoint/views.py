@@ -17,9 +17,6 @@ def index(request):
 def login(request):
 	return render(request, "dashboard/login.html")
 
-def startSellPoint(request):
-	return render(request, "dashboard/sellpoint.html")
-
 def form_categorias_view(request):
 	form = FormCategoria_Productos(request.POST)
 	if request.method == 'POST':
@@ -29,7 +26,6 @@ def form_categorias_view(request):
 		
 	queryset = Categoria_Productos.objects.all()
 	context = {	'form':form	,'lista':queryset}
-	
 	return render(request,"dashboard/form_categoria_productos.html", context)
 
 #-------------------PRODUCTOS------
@@ -66,7 +62,7 @@ def get_products_by_id(request):
 	if request.method == 'GET':
 		id_ = request.GET.get('id')
 		if id_ is not None:
-			data =  Productos.objects.filter(Q(id__icontains = id_))
+			data =  Productos.objects.filter(Q(id__icontains = id_))[:10]
 			for dt in data:
 				datos.append({"id": str(dt.id),"nombre": str(dt.nombre), 'descripcion': str(dt.descripcion), 'precio':str(dt.precio), 'id':int(dt.id)})
 		else:
@@ -233,3 +229,10 @@ def almacen_buscar(request):
 			return render(request, 'dashboard/form_almacen.html',{'form': queryset})
 
 	return HttpResponse(str(datos))	
+
+
+
+#SELL POINT DEF
+def startSellPoint(request):
+	return render(request, "sellpoint/sellpoint.html")
+

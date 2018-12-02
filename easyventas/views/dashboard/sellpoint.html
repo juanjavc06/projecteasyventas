@@ -1,16 +1,29 @@
 {% extends "base_sellpoint.html" %}
 
 {% block title %}Dashboard{% endblock %}
+{% block style %}
+<style>
+.qty{width: 40px; display: inline; padding-left: 3px; padding-right: 3px; }
+#car-shop td strong{
+    vertical-align: middle;
+    font-size: 30px;
+
+}
+#car-shop button.btn{
+    font-size: 25px;
+}
+#car-shop button.btn.less-more{
+    padding: 2px 5px;
+    margin:5px;
+}
+#car-shop button.btn.delete-product{
+    padding: 5px 10px;
+}
+</style>
+{% endblock %}
+
 
 {% block content %}
-                                <style>
-                                    .qty{
-                                        width: 40px;
-                                        display: inline;
-                                        padding-left: 3px;
-                                        padding-right: 3px;
-                                    }
-                                </style>
 <div class="dashboard-wrapper" id="content-sellpoint" style="margin-left: 0px;margin-right: 350px;">
     <div class="dashboard-ecommerce">
         <div class="container-fluid dashboard-content ">
@@ -72,21 +85,74 @@
         </div>
     </div>
 </div>
-<style>
-    #car-shop td strong{
-        vertical-align: middle;
-        font-size: 30px;
-    }
-    #car-shop button.btn{
-        font-size: 25px;
-    }
-    #car-shop button.btn.less-more{
-        padding: 2px 5px;
-        margin:5px;
-    }
-    #car-shop button.btn.delete-product{
-        padding: 5px 10px;
-    }
-</style>
+{% endblock %}
 
+
+{% block script %}
+<script>
+    $(document).keypress(function(evt){
+        if ($(':focus').attr("id") != "code-id-producto" && $("#navbarNav").css("width")!="0px") {
+            var patt = /[0-9]|\/|\*|\-|\+/i;
+            if (String.fromCharCode(evt.keyCode).match(patt)) {
+                $("#code-id-producto").val($("#code-id-producto").val() + String.fromCharCode(evt.keyCode));
+                productosId();
+            }
+        }
+    });
+
+    $(document).keyup(function(evt){
+        console.log(evt.keyCode);
+    });
+
+    $("#code-id-producto").on('input',function(e){
+        buscar_producto_por_id($(this).val());
+    });
+
+    var compras = [];
+    function concuir_compra(){
+    }
+
+    var jsonvar = "";
+    var data = null;
+    function buscar_producto_por_id(id){
+        var x = new XMLHttpRequest();
+        x.open('GET','{% url 'productos_getbyid' %}?id='+ id)
+        x.onreadystatechange = function (e){
+            if(x.readyState == 4){
+                if(x.status === 200){
+                    x.addEventListener('load', function(e){
+                        data = JSON.parse(x.responseText.replace(/\'/g,'"'))[0];
+                    });
+                }
+            }
+        }
+        x.send();
+        return data;
+    }
+
+/*  if (data.length > 0) {
+    $("#result_").html("");
+    $("#calculator_data").slideUp();
+    var row = data[0];
+    $("#code-id-producto").attr("data-id-product",data[0]);
+}else{
+    $("#result_").html("No se encontro");
+    $("#code-id-producto").attr("data-id-product","");
+}*/
+
+    function agregar_producto(id){
+
+    }
+    function eliminar_producto(id){
+
+    }
+    function agregar_un_oproducto(id){
+
+    }
+    function eliminar_un_producto(id){
+
+    }
+
+
+</script>
 {% endblock %}
