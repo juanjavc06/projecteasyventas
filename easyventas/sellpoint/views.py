@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
-
+from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers import *
 from django.shortcuts import *
 
 from django.urls import reverse_lazy
-
+import json
 
 from django.http import JsonResponse, HttpResponse
 
@@ -104,6 +104,7 @@ def form_proveedores_view(request):
 def proveedores_buscar(request):
 	queryset = Proveedores_Clientes.objects.all()
 	datos = []
+	print(request.GET)
 	if request.method == 'GET':
 		filtro = request.GET.get('filtro')
 		if filtro is not None:
@@ -132,8 +133,58 @@ def form_productos_proveedores(request,id):
 	context 	= {'producto':producto, 'proveedores': proveedores}
 	return render(request, 'dashboard/form_productos_proveedores.html',context)
 
+@csrf_exempt
+def guardar_proveedores_producto(request):
+	print('entre a la funcion')
+	if request.method == 'POST':
+		print(request.POST.get('lista'))
+		objects = json.loads(request.POST.get('lista'))
+		print(objects)
+		for proveedor in objects:
+			print(proveedor['producto'])
+			if proveedor['id'] != 0:
+				prodProv = get_object_or_404(Productos_Proveedores,id=proveedor['id'])
+			else:
+				prodProv = Productos_Proveedores()
+			prodProv.producto = get_object_or_404(Productos,nombre=proveedor['producto'])
+			prodProv.proveedor = get_object_or_404(Proveedores_Clientes,rfc=proveedor['proveedor'])
+			prodProv.cantidad = proveedor['cantidad']
+			prodProv.costo_total = proveedor['precio']
+			prodProv.save()
+		return HttpResponse('Guardado con Exito')
+	return HttpResponse('Error al procesar los datos')
+		
+
+
 def eliminar_proveedor_producto(request,id):
 	pass
+
+#------------ORDEN DE COMPRA
+
+def form_orden_compra(request):`
+	if request.method == "GET":
+		form = FormCompras()
+		context = {	'form':form	}
+		return render(request,"dashboard/form_compras.html", context)
+	else:
+		objects = json.loads(request.POST.get('detalles'))
+		print(objects)
+		for detalles in objects:
+			print(detalles['producto'])
+			if detalles['id'] != 0:
+				prodProv = get_object_or_404(Productos_detalleses,id=detalles['id'])
+			else:
+				prodProv = Productos_detalleses()
+			prodProv.producto = get_object_or_404(Productos,nombre=detalles['producto'])
+			prodProv.detalles = get_object_or_404(detalleses_Clientes,rfc=detalles['detalles'])
+			prodProv.cantidad = detalles['cantidad']
+			prodProv.costo_total = detalles['precio']
+			prodProv.save()
+		return HttpResponse('Guardado con Exito')
+
+
+
+
 
 
 

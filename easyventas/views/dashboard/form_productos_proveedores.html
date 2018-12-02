@@ -19,7 +19,8 @@
               <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div class="card">
-                            <h5 class="card-header">{{producto.nombre}}:   {{producto.descripcion}}</h5>
+
+                            <h5 class="card-header" id="producto_id">{{producto.nombre}}:   {{producto.descripcion}}</h5>
                         </div>
                     </div>
                 </div>
@@ -43,11 +44,11 @@
                                   
                                 
                               {% for p in proveedores %}
-                              <tr>
+                              <tr id="{{p.proveedor.id}}">
                                 <td>{{ p.proveedor.rfc }}</td>
                                 <td>{{ p.proveedor.nombre_comercial }}</td>
-                                <td>{{ p.cantidad }}</td>
-                                <td>{{ p.costo_total }}</td>
+                                <td><input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="{{ p.cantidad }}"/></td>
+                                <td><input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="{{ p.costo_total }}"/></td>
                                 <td><a class="btn btn-secondary text-white" href="{% url  'eliminar_proveedor_producto' p.id %}">Eliminar</a></td>
                               </tr>
 
@@ -60,8 +61,12 @@
                            
                         </div>
                             <button type="button" class="btn bt-sm btn-primary" data-toggle="modal"  data-target="#modal-info" onclick="buscar()">Agregar <i class="fa fa-plus"></i></button>
-                    </div>
 
+
+                    </div>
+                    <div class="col-md-12 float-right">
+                      <button type="button" class="btn bt-sm btn-success" onclick="guardarProveedores()">Guardar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,16 +152,14 @@ var rfc = boton.parentNode.parentNode.children[0].textContent;
 var nombre = boton.parentNode.parentNode.children[1].textContent;
 var tablaCuerpo = document.getElementById('tabla_lista').children[1];
 var tr = document.createElement('tr');
+    tr.id = "0"
        tr.innerHTML = '<td>'+ rfc +'</td>'  +
         '<td>'+ nombre +'</td>'  +
         '<td> <input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"  /></td>'  +
         '<td><input type="number" class="form-control"  pattern="[0-9]+([\.,][0-9]+)?" step="0.01"  /></td></td>'  +
         '<td><a class="btn btn-secondary text-white" onclick="removerProveedor(this)"  >Eliminar</a></td>' 
         tablaCuerpo.appendChild(tr);
-     $('modal-info').modal('hide');
-      
 
-      instancia.hide();
 }
 
 function removerProveedor(boton){
@@ -166,8 +169,39 @@ document.getElementById('tabla_lista').children[1].removeChild(tr);
 
 function guardarProveedores() {
   //serializamos el json para guardar todos
+var tablaProveedores = document.getElementById('tabla_lista').children[1]
+var prod = document.getElementById('producto_id').textContent
+prod = prod.split(':')[0]
+var json ="[";
+  for (var i = 0; i < tablaProveedores.childElementCount; i++) {
+    json += (i==0)?'{':',{';
+    json += '"id":'+tablaProveedores.children[i].id +',';
+    json += '"producto":"'+ prod +'",';
+    json += '"proveedor":"'+ tablaProveedores.children[i].children[0].textContent +'",';
+    json += '"cantidad":'+ tablaProveedores.children[i].children[2].children[0].value +',';
+    json += '"precio":'+ tablaProveedores.children[i].children[3].children[0].value +'';
+    json += '}';
+  }
+  json+="]"
 
 
+var x = new XMLHttpRequest();
+var frmd = new FormData()
+frmd.append('lista',json)
+    x.open('POST','../../../productos/proveedores_guardar/');
+    x.onreadystatechange = function (e){
+      if(x.readyState == 4){
+        if(x.status === 200){
+          x.addEventListener('load', function(e){
+              var json = JSON.parse(x.responseText.replace(/\'/g,'"'));
+
+                  //llenamos la tabla
+                  console.log(json);
+          });
+        }
+      }
+     }
+    x.send(frmd);
 
 
 }

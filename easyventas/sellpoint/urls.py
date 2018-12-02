@@ -26,7 +26,7 @@ urlpatterns = [
     #PROVEEDORES POR PRODUCTO
     path('productos/proveedores/<int:id>/',views.form_productos_proveedores,name='proveedores_producto'),
     path('productos/proveedores_eliminar/<int:id>/',views.eliminar_proveedor_producto,name='eliminar_proveedor_producto'),
-
+    path('productos/proveedores_guardar/',views.guardar_proveedores_producto, name='guardar_proveedores_producto'),
     #Usuarios
 
     path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),
@@ -35,6 +35,9 @@ urlpatterns = [
     path('proveedores/nuevo/', views.form_proveedores_view, name="proveedor_nuevo"),
     path('proveedores/', views.proveedores_buscar, name="proveedores_buscar"),
     path('proveedores/editar/<int:pk>/', views.form_proveedores_editar.as_view(), name="proveedores_editar"),
+
+    #orden de compra
+     path('compras/nuevo/', views.form_orden_compra, name="nueva_orden_compra"),
 
     #zona
     path('zona/nueva/',views.zona,name="zona_nueva"),

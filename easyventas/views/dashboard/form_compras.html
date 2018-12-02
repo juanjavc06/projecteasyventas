@@ -1,0 +1,222 @@
+{% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Orden de Compra</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ecommerce-widget">
+              <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="card">
+
+                            <h5 class="card-header" id="producto_id"> Orden de compra </h5>
+                        </div>
+                    </div>
+
+                      <div class="form-group">
+                        <label for="input-select">Proveedor:</label>
+                        {{ form.proveedor|add_class:"form-control"|attr:"type:text" }}
+                      </div>
+                      <div class="form-group">
+                        <label for="input-select">Fecha de Entrega:</label>
+                        {{ form.fecha_entrega|add_class:"form-control"|attr:"type:date"}}
+                      </div>
+                      
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">S
+                      <div class="card">
+                            <h5 class="card-header">Detalles</h5>
+                            <div class="card-body">
+                              <table  id="tabla_lista" class="table table-white table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Producto</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th>Eliminar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  
+
+                              </tbody>
+                              </table>
+                            </div>
+
+                           
+                    </div>
+                      <button type="button" class="btn bt-sm btn-primary" data-toggle="modal"  data-target="#modal-info" onclick="buscar()">Agregar <i class="fa fa-plus"></i></button>
+
+
+                    </div>
+                    <div class="col-md-12 float-right">
+                      <button type="button" class="btn bt-sm btn-success" onclick="guardarOrdenCompra()">Generar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!------MODAL DE PROVEEDORES---->
+<div class="modal fade modal-lg" id="modal-info" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <input id ="input_filtro_modal" onkeyup="buscar()" class="form-control" type="text" placeholder="Buscar..">
+        <h5 class="modal-title" id="titulo-modal"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+              <div class="row">
+               <table id="tabla_lista_modal" class="table table-striped">
+                <thead>
+                   <th>Producto</th>
+                   <th>Descripcion</th>
+                   <th>Precio</th>
+                   <th>Accion</th>
+                 </thead>
+                 <tbody>
+                   
+                 </tbody>
+               </table>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  
+function buscar(){
+    var busqueda = document.getElementById('input_filtro_modal').value;
+    var x = new XMLHttpRequest();
+    x.open('GET','/productos/buscar/?filtro='+ busqueda)
+    x.onreadystatechange = function (e){
+
+      if(x.readyState == 4){
+
+        if(x.status === 200){
+
+          x.addEventListener('load', function(e){
+              var json = JSON.parse(x.responseText.replace(/\'/g,'"'));
+
+                  //llenamos la tabla
+                  llenarTabla(json);
+          });
+        }
+      }
+     }
+    x.send();
+  }
+
+
+function llenarTabla(data){
+    var cuerpo = document.getElementById('tabla_lista_modal').children[1];
+    cuerpo.innerHTML = ''; //limpiamos la tabla
+
+    for (var i = 0; i < data.length; i++) {
+  var tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+ data[i].nombre +'</td>'  +
+        '<td>'+ data[i].descripcion +'</td>'  +
+        '<td>$'+ data[i].precio +'</td>'  +
+        '<td><a class="btn btn-success text-white" onclick="seleccionarProveedor(this)" data-dismiss="modal" >Seleccionar </a></td>' 
+      cuerpo.appendChild(tr);
+
+      
+      
+    }
+
+  }
+function seleccionarProveedor(boton){
+var nombre = boton.parentNode.parentNode.children[0].textContent;
+var descripcion = boton.parentNode.parentNode.children[1].textContent;
+var precio = boton.parentNode.parentNode.children[1].textContent.replace('$','');
+var tablaCuerpo = document.getElementById('tabla_lista').children[1];
+var tr = document.createElement('tr');
+    tr.id = "0"
+        tr.innerHTML = 
+        '<td>'+ nombre +'</td>'  +
+        '<td>'+ descripcion +'</td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="'+ precio +'"/></td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="0"/></td>'  +
+        '<td><a class="btn btn-secondary font-white" onclick="removerProducto(this)" >Eliminar </a></td>'  
+        tablaCuerpo.appendChild(tr);
+
+}
+
+function removerProducto(boton){
+var trEliminar = boton.parentNode.parentNode;
+document.getElementById('tabla_lista').children[1].removeChild(tr);
+}
+
+function guardarProveedores() {
+  //serializamos el json para guardar todos
+var tablaDetalles = document.getElementById('tabla_lista').children[1]
+var prod = document.getElementById('producto_id').textContent
+prod = prod.split(':')[0]
+var json ="[";
+  for (var i = 0; i < tablaDetalles.childElementCount; i++) {
+    json += (i==0)?'{':',{';
+    json += '"id":'+tablaDetalles.children[i].id +',';
+    json += '"producto":"'+ prod +'",';
+    json += '"proveedor":"'+ tablaDetalles.children[i].children[0].textContent +'",';
+    json += '"cantidad":'+ tablaDetalles.children[i].children[2].children[0].value +',';
+    json += '"precio":'+ tablaDetalles.children[i].children[3].children[0].value +'';
+    json += '}';
+  }
+  json+="]"
+
+
+var x = new XMLHttpRequest();
+var frmd = new FormData()
+frmd.append('lista',json)
+    x.open('POST','../../../productos/proveedores_guardar/');
+    x.onreadystatechange = function (e){
+      if(x.readyState == 4){
+        if(x.status === 200){
+          x.addEventListener('load', function(e){
+              var json = JSON.parse(x.responseText.replace(/\'/g,'"'));
+
+                  //llenamos la tabla
+                  console.log(json);
+          });
+        }
+      }
+     }
+    x.send(frmd);
+
+
+}
+
+
+
+</script>
+
+
+
+
+{% endblock %}
