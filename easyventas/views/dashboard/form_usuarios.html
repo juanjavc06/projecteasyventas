@@ -1,4 +1,5 @@
 {% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
@@ -25,9 +26,26 @@
                             <h5 class="card-header">Usuario</h5>
                             <div class="card-body">
                               <form method="post">
-                                {% csrf_token %}
-                                {{ form }}
-                                <button type="submit" class="btn btn-success">Save</button>
+                                   {% csrf_token %}
+                                 <div class="form-group">
+                                      <label for="input-select">Usuario:</label>
+                                      {{ form.usuarios|add_class:"form-control"|attr:"type:text" }}
+                                 </div>
+                                 <div>
+                                    <label for="input-select">Nombre del Usuario:</label>
+                                     {{ form.nombre|add_class:"form-control"|attr:"type:text" }}
+                                 </div>
+                                 <div>
+                                     <label for="input-select">Password:</label>
+                                     {{ form.password|add_class:"form-control"|attr:"type:text" }}
+                                 </div>
+                                 <div>
+                                     <label for="input-select">Perfil:</label>
+                                    {{ form.perfil|add_class:"form-control"|attr:"type:text" }}
+                                </div>
+                                <div>
+                                     <button type="submit" class="btn btn-success">Save</button>
+                                </div>
                               </form>
                             </div>
                         </div>

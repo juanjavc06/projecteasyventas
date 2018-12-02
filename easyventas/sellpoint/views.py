@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
 from django.core import serializers
+from django.urls import reverse_lazy
 
 from django.http import JsonResponse, HttpResponse
 
@@ -10,6 +11,7 @@ from  .models import *
 from .forms import * 
 
 # Create your views here.
+
 
 def index(request):
 	return render(request, "dashboard/dashboard.html")
@@ -111,8 +113,6 @@ class form_proveedores_editar(generic.UpdateView):
     fields = '__all__'
     success_url = '../../../proveedores/'
 
-#------------RELACION PRODUCTOS PROVEEDORES
-
 
 
 
@@ -138,14 +138,14 @@ def usuarios_buscar(request):
 			print(filtro)
 			data =  Usuarios.objects.filter(Q(usuarios__icontains = filtro) | Q(perfil__icontains = filtro))
 			for dt in data:
-				datos.append({"usuarios": str(dt.usuarios), 'nombre': str(dt.nombre), 'password':str(dt.password),'perfil':str(dt.perfil), 'id':int(dt.id)})
+				datos.append({"usuarios": str(dt.usuarios), 'nombre': str(dt.nombre), 'password':str(dt.password),'perfil':str(dt.perfil)})
 		else:
-			return render(request, 'dashboard/form_usuarios.html',{'form': queryset})
+			return render(request, 'dashboard/form_usuarios_buscar.html',{'form': queryset})
 
 	return HttpResponse(str(datos))	
 
 #Actualizar Usuario
-class usuario_editar(generic.UpdateView):
+class usuarios_editar(generic.UpdateView):
 	template_name   = 'dashboard/form_usuarios_editar.html'
 	model           = Usuarios
 	fields          = '__all__'
@@ -154,17 +154,49 @@ class usuario_editar(generic.UpdateView):
 #PERFILES
 def perfiles(request):
 	form = FormPerfiles(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormPerfiles()
 	return render(request,"dashboard/perfiles.html",{'form': form})
 
 
 #ZONA
 def zona(request):
 	form = FormZona(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormZona()
+
 	return render(request,"dashboard/form_zona.html",{'form': form})
+
+#Funcion para actualizar las zonas
+class zona_editar(generic.UpdateView):
+	template_name   = 'dashboard/form_zona_editar.html'
+	model           = Zona
+	fields          = '__all__'
+	success_url     = '../../../zona/buscar/'
+
+def zona_buscar(request):
+	queryset = Zona.objects.all()
+	datos = []
+	if request.method == 'GET':
+		filtro = request.GET.get('filtro')
+		if filtro is not None:
+			print(filtro)
+			data =  Zona.objects.filter(Q(zona__icontains = filtro))
+			for dt in data:
+				datos.append({"zona": str(dt.zona), 'almacen': str(dt.almacen)})
+		else:
+			return render(request, 'dashboard/form_zona_buscar.html',{'form': queryset})
+
+	return HttpResponse(str(datos))	
 
 #CORTE
 def crear_corte(request):
 	form = FormCortes(request.POST)
+	if form.is_valid():
+		form.save()
+		form = FormCortes()
 	return render(request,"dashboard/corte.html",{'form': form})
 
 
@@ -186,11 +218,11 @@ def inventario_buscar(request):
 		filtro = request.GET.get('filtro')
 		if filtro is not None:
 			print(filtro)
-			data =  Inventario.objects.filter(Q(producto__icontains = filtro))
+			data =  Inventario.objects.filter(Q(existencias__icontains = filtro) | Q(producto__icontains = filtro) | Q(zona__icontains = filtro))
 			for dt in data:
-				datos.append({"existencias": str(dt.existencias), 'producto': str(dt.producto), 'zona':str(dt.zona), 'id':int(dt.id)})
+				datos.append({"existencias": str(dt.existencias), 'producto': str(dt.producto), 'zona':str(dt.zona)})
 		else:
-			return render(request, 'dashboard/form_inventario.html',{'form': queryset})
+			return render(request, 'dashboard/form_inventario_buscar.html',{'form': queryset})
 
 	return HttpResponse(str(datos))	
 
@@ -213,7 +245,7 @@ def almacen(request):
 
 #Funcion para editar un almacen
 class almacen_editar(generic.UpdateView):
-	template_name   = 'dashboard/form_inventario_editar.html'
+	template_name   = 'dashboard/form_almacen_editar.html'
 	model           = Almacen
 	fields          = '__all__'
 	success_url     = '../../../almacen/buscar/'	
@@ -228,8 +260,8 @@ def almacen_buscar(request):
 			print(filtro)
 			data =  Almacen.objects.filter(Q(Almacen__icontains = filtro))
 			for dt in data:
-				datos.append({"almacen": str(dt.almacen), 'zona': str(dt.zona), 'id':int(dt.id)})
+				datos.append({"almacen": str(dt.almacen), 'zona': str(dt.zona)})
 		else:
-			return render(request, 'dashboard/form_almacen.html',{'form': queryset})
+			return render(request, 'dashboard/form_almacen_buscar.html',{'form': queryset})
 
 	return HttpResponse(str(datos))	

@@ -106,10 +106,16 @@ class Usuarios(models.Model):
 
 	def __str__(self):
 		return str(self.usuarios)
-
+		
+class Almacen(models.Model):
+	almacen 		= models.CharField(max_length=255)
+	
+	def __str__(self):
+		return str(self.almacen)
 
 class Zona(models.Model):
 	zona 			= models.CharField(max_length=255)
+	almacen 		= models.ForeignKey(Almacen,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return str(self.zona)
@@ -122,12 +128,7 @@ class Inventario(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-class Almacen(models.Model):
-	almacen 		= models.CharField(max_length=255)
-	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE)
 
-	def __str__(self):
-		return str(self.almacen)
 
 class Movimientos(models.Model):
 	tipo 			= models.CharField(max_length=255)
