@@ -1,0 +1,24 @@
+{%load staticfiles%}
+{%block productos%}
+<table  id ="tabla_lista" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Descripcion</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+    <tbody>
+    {%for f in form %}
+    <tr>
+      <td>{{ f.nombre }}</td>
+      <td>{{ f.descripcion }}</td>
+      <td>{{ f.precio }}</td>
+    </tr>
+   
+    {%empty%}
+    No hay productos
+    {%endfor%}
+    </tbody>
+ </table>
+{%endblock%}

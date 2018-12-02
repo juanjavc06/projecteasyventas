@@ -7,6 +7,8 @@ urlpatterns = [
     path('login/', views.login ,name="login"),
 
     path('dashboard/', views.index ,name="dashboard"),
+
+
     path('', views.index),
     #PUNTO DE VENTA
     path('sellpoint/', views.startSellPoint,name="sellpoint"),
@@ -24,12 +26,6 @@ urlpatterns = [
     path('proveedores/nuevo/', views.form_proveedores_view, name="proveedor_nuevo"),
     path('proveedores/', views.proveedores_buscar, name="proveedores_buscar"),
     path('proveedores/editar/<int:pk>/', views.form_proveedores_editar.as_view(), name="proveedores_editar"),
-
-
-    #usuarios
-    path('usuarios/nuevo/',views.usuario, name="usuario_nuevo"),
-    path('usuarios/buscar/',views.usuarios_buscar,name="usuarios_buscar"),
-    path('usuarios/editar/<int:pk>/',views.usuarios_editar.as_view(),name="usuarios_editar"),
 
     #zona
     path('zona/nueva/',views.zona,name="zona_nueva"),

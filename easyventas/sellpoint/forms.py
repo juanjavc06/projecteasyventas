@@ -58,18 +58,6 @@ class FormVentas_Detalle (forms.ModelForm):
 		model 	= Ventas_Detalle
 		fields	= '__all__'
 
-#-------------------------------------------Seccion Jenny--------------------------------------------------
-class FormPerfiles(forms.ModelForm):
-
-	class Meta:
-		model  = Perfiles
-		fields = '__all__'
-
-class FormUsuarios(forms.ModelForm):
-
-	class Meta:
-		model  = Usuarios
-		fields = '__all__'
 
 class FormZona(forms.ModelForm):
 

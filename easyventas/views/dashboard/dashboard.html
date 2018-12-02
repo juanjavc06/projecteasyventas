@@ -1,83 +1,148 @@
 {% extends "base_dashboard.html" %}
-
+{%load staticfiles%}
 {% block title %}Dashboard{% endblock %}
-
 {% block content %}
-<div class="dashboard-wrapper">
-    <div class="dashboard-ecommerce">
-        <div class="container-fluid dashboard-content ">
-            <!-- ============================================================== -->
-            <!-- pageheader  -->
-            <!-- ============================================================== -->
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="page-header">
-                        <h2 class="pageheader-title">Lista de Productos</h2>
-                        <div class="page-breadcrumb">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Productos</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Lista de Productos</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- end pageheader  -->
-            <!-- ============================================================== -->
-            <div class="ecommerce-widget">
+
+<!doctype html>
+<html lang="en">
+
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/circular-std/style.css' %}>
+    <link rel="stylesheet" href="{% static 'assets/libs/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/vector-map/jqvmap.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/flag-icon-css/flag-icon.min.css' %}">
+    <title>Admin</title>
+</head>
+
+<body>
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pagehader  -->
+                <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <div class="card">
-                            <h5 class="card-header">Productos</h5>
-                          <!--
-                          id
-                          nombre
-                          descripcion
-                          unidadmedidad
-                          inventario
-                          cantidad actual
-                          imagen
-                          acciones
-                          -->
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Descripcion</th>
-                                            <th scope="col">Cantidad Actual</th>
-                                            <th scope="col">Unidad de Medida</th>
-                                            <th scope="col">Imagen</th>
-                                            <th scope="col">Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row"><a>3</a></th>
-                                            <td>Gansitos</td>
-                                            <td>Pastel de Chocolate</td>
-                                            <td>45</td>
-                                            <td>unidades</td>
-                                            <td><img src="https://www.superama.com.mx/Content/images/products/img_large/0750100015310L.jpg" style="width:70px;"></td>
-                                            <td>
-                                              <div class="btn-group">
-                                                <a href="#" class="btn btn-primary active">Eliminar</a>
-                                                <a href="#" class="btn btn-primary active">Editar</a>
-                                              </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="page-header">
+                            <h2 class="mb-2">Administrador</h2>
+                            
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- ============================================================== -->
+                <!-- pagehader  -->
+                <!-- ============================================================== -->
+
+                <div class="row">
+                    <!-- metric -->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Ventas</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1 text-primary" >0</h1>
+                                </div>
+                                
+                            </div>
+                            <div id="sparkline-1"></div>
+                        </div>
+                    </div>
+                    <!-- /. metric -->
+                    <!-- metric -->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Ordenes</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1 text-primary">0 </h1>
+                                </div>
+                                
+                            </div>
+                            <div id="sparkline-2"></div>
+                        </div>
+                    </div>
+                    <!-- /. metric -->
+                    <!-- metric -->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Productos</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1 text-primary"> 39
+                                    </h1>
+                                </div>
+                                
+                            </div>
+                            <div id="sparkline-3">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. metric -->
+                </div> 
+                <!-- /. end row -->
+
+                    <!-- ============================================================== -->
+                    <!-- last selling products  -->
+                   <div>
+                      <div class="ecommerce-widget">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                              <div class="card">
+                                    <h5 class="card-header">Productos</h5>
+                                    <div class="card-body">       
+                                            {% include 'forms/ultimos_productos.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+                   </div> <!-- ============================================================== -->
+            </div>                
+            </div>     
         </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
     </div>
-</div>
-{% endblock %}
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 js-->
+    <script src="{% static 'assets/vendor/jquery/jquery-3.3.1.min.js '"></script>
+    <!-- bootstrap bundle js-->
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.js '"></script>
+    <!-- slimscroll js-->
+    <script src="{% static 'assets/vendor/slimscroll/jquery.slimscroll.js '"></script>
+    <!-- chartjs js-->
+    <script src="{% static 'assets/vendor/charts/charts-bundle/Chart.bundle.js '"></script>
+    <script src="{% static 'assets/vendor/charts/charts-bundle/chartjs.js '"></script>
+   
+    <!-- main js-->
+    <script src="{% static 'assets/libs/js/main-js.js '"></script>
+    <!-- jvactormap js-->
+    <script src="{% static 'assets/vendor/jvectormap/jquery-jvectormap-2.0.2.min.js '"></script>
+    <script src="{% static 'assets/vendor/jvectormap/jquery-jvectormap-world-mill-en.js '"></script>
+    <!-- sparkline js-->
+    <script src="{% static 'assets/vendor/charts/sparkline/jquery.sparkline.js '"></script>
+    <script src="{% static 'assets/vendor/charts/sparkline/spark-js.js '"></script>
+     <!-- dashboard sales js-->
+    <script src="{% static 'assets/libs/js/dashboard-sales.js '"></script>
+</body>
+ 
+</html>
+
+{%endblock%}
