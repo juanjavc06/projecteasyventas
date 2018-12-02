@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt
+<<<<<<< HEAD
 from django.core.serializers import *
 from django.shortcuts import *
-
+=======
+from django.core import serializers
 from django.urls import reverse_lazy
-import json
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
 
 from django.http import JsonResponse, HttpResponse
 
@@ -18,11 +19,13 @@ from .forms import *
 
 
 def index(request):
-	queryset = Productos.objects.all()
-	return render(request, "dashboard/dashboard.html", {"productos":queryset})
+	return render(request, "dashboard/dashboard.html")
 
 def login(request):
 	return render(request, "dashboard/login.html")
+
+def startSellPoint(request):
+	return render(request, "dashboard/sellpoint.html")
 
 def form_categorias_view(request):
 	form = FormCategoria_Productos(request.POST)
@@ -33,6 +36,7 @@ def form_categorias_view(request):
 		
 	queryset = Categoria_Productos.objects.all()
 	context = {	'form':form	,'lista':queryset}
+	
 	return render(request,"dashboard/form_categoria_productos.html", context)
 
 #-------------------PRODUCTOS-------------------------------
@@ -47,10 +51,8 @@ def form_productos_view(request):
 	return render(request,"dashboard/form_productos.html", context)
 
 def ultimos_productos(request):
-	print('cerdito :v')
 	queryset = Productos.objects.all()
-	print(queryset)
-	return render(request, "forms/ultimos_productos.html", {"productos": queryset})
+	return render(request, "forms/ultimos_productos.html", {"form": queryset})
 
 def productos_buscar(request):
 	queryset = Productos.objects.all()
@@ -74,7 +76,7 @@ def get_products_by_id(request):
 	if request.method == 'GET':
 		id_ = request.GET.get('id')
 		if id_ is not None:
-			data =  Productos.objects.filter(Q(id__icontains = id_))[:10]
+			data =  Productos.objects.filter(Q(id__icontains = id_))
 			for dt in data:
 				datos.append({"id": str(dt.id),"nombre": str(dt.nombre), 'descripcion': str(dt.descripcion), 'precio':str(dt.precio), 'id':int(dt.id)})
 		else:
@@ -100,7 +102,6 @@ def form_proveedores_view(request):
 def proveedores_buscar(request):
 	queryset = Proveedores_Clientes.objects.all()
 	datos = []
-	print(request.GET)
 	if request.method == 'GET':
 		filtro = request.GET.get('filtro')
 		if filtro is not None:
@@ -120,7 +121,7 @@ class form_proveedores_editar(generic.UpdateView):
     fields = '__all__'
     success_url = '../../../proveedores/'
 
-
+<<<<<<< HEAD
 #------------RELACION PRODUCTOS PROVEEDORES
 
 def form_productos_proveedores(request,id):
@@ -129,59 +130,11 @@ def form_productos_proveedores(request,id):
 	context 	= {'producto':producto, 'proveedores': proveedores}
 	return render(request, 'dashboard/form_productos_proveedores.html',context)
 
-@csrf_exempt
-def guardar_proveedores_producto(request):
-	print('entre a la funcion')
-	if request.method == 'POST':
-		print(request.POST.get('lista'))
-		objects = json.loads(request.POST.get('lista'))
-		print(objects)
-		for proveedor in objects:
-			print(proveedor['producto'])
-			if proveedor['id'] != 0:
-				prodProv = get_object_or_404(Productos_Proveedores,id=proveedor['id'])
-			else:
-				prodProv = Productos_Proveedores()
-			prodProv.producto = get_object_or_404(Productos,nombre=proveedor['producto'])
-			prodProv.proveedor = get_object_or_404(Proveedores_Clientes,rfc=proveedor['proveedor'])
-			prodProv.cantidad = proveedor['cantidad']
-			prodProv.costo_total = proveedor['precio']
-			prodProv.save()
-		return HttpResponse('Guardado con Exito')
-	return HttpResponse('Error al procesar los datos')
-		
-
-
 def eliminar_proveedor_producto(request,id):
 	pass
 
-#------------ORDEN DE COMPRA
-
-def form_orden_compra(request):`
-	if request.method == "GET":
-		form = FormCompras()
-		context = {	'form':form	}
-		return render(request,"dashboard/form_compras.html", context)
-	else:
-		objects = json.loads(request.POST.get('detalles'))
-		print(objects)
-		for detalles in objects:
-			print(detalles['producto'])
-			if detalles['id'] != 0:
-				prodProv = get_object_or_404(Productos_detalleses,id=detalles['id'])
-			else:
-				prodProv = Productos_detalleses()
-			prodProv.producto = get_object_or_404(Productos,nombre=detalles['producto'])
-			prodProv.detalles = get_object_or_404(detalleses_Clientes,rfc=detalles['detalles'])
-			prodProv.cantidad = detalles['cantidad']
-			prodProv.costo_total = detalles['precio']
-			prodProv.save()
-		return HttpResponse('Guardado con Exito')
-
-
-
-
-
+=======
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
 
 
 
@@ -295,14 +248,14 @@ def almacen_buscar(request):
 	return HttpResponse(str(datos))	
 
 
+
 <<<<<<< HEAD
 	return HttpResponse(str(datos))	
 
 
 
-#SELL POINT DEF
-def startSellPoint(request):
-	return render(request, "sellpoint/sellpoint.html")
+
+
 
 =======
 #------------------------------------------REPORTES--------------------------------------------
@@ -311,4 +264,4 @@ def startSellPoint(request):
 #		reporte=render_pdf("reportes/reporte_productos.html")
 #		datos()
 #		return HttpResponse(reporte,content_type="")
->>>>>>> 1fb6db935103e348eff72a2a0b1cfa4b998a8e8f
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7

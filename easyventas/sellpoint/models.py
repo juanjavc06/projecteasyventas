@@ -91,26 +91,35 @@ class Ventas_Detalle(models.Model):
 
 #--------------------------Seccion Jenny no tocar :v ---------------------------------------
 
-class Perfiles(models.Model):
-	perfil 			= models.CharField(max_length=100)
+#class Perfiles(models.Model):
+#	perfil 			= models.CharField(max_length=100)
+#
+#	def __str__(self):
+#		return str(self.perfil)
 
+
+#class Usuarios(models.Model):
+#	usuarios 		= models.CharField(max_length=255)
+#	nombre 			= models.CharField(max_length=255)
+#	password		= models.CharField(max_length=100)
+#	perfil 			= models.ForeignKey(Perfiles,on_delete=models.CASCADE)
+
+#	def __str__(self):
+#		return str(self.usuarios)
+		
+class Almacen(models.Model):
+	almacen 		= models.CharField(max_length=255)
+	
 	def __str__(self):
-		return str(self.perfil)
-
-
-class Usuarios(models.Model):
-	usuarios 		= models.CharField(max_length=255)
-	nombre 			= models.CharField(max_length=255)
-	password		= models.CharField(max_length=100)
-	perfil 			= models.ForeignKey(Perfiles,on_delete=models.CASCADE)
-
-	def __str__(self):
+<<<<<<< HEAD
 		return str(self.usuarios)
 		
 class Almacen(models.Model):
 	almacen 		= models.CharField(max_length=255)
 	
 	def __str__(self):
+=======
+>>>>>>> 1fb6db935103e348eff72a2a0b1cfa4b998a8e8f
 		return str(self.almacen)
 
 class Zona(models.Model):
