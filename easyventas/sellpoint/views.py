@@ -164,13 +164,16 @@ def form_orden_compra(request):
 		return render(request,"dashboard/form_compras.html", context)
 	else:
 		objects = json.loads(request.POST.get('detalles'))
-		print(objects)
+		compra = Compras()
+		compra.sub_total =request.POST.get('subtotal') 
+		compra.impuestos =request.POST.get('impuestos') 
+
+
 		for detalles in objects:
-			print(detalles['producto'])
 			if detalles['id'] != 0:
-				prodProv = get_object_or_404(Productos_detalleses,id=detalles['id'])
+				detalles = get_object_or_404(Compras_Detalle,id=detalles['id'])
 			else:
-				prodProv = Productos_detalleses()
+				detalles = Compras_Detalle()
 			prodProv.producto = get_object_or_404(Productos,nombre=detalles['producto'])
 			prodProv.detalles = get_object_or_404(detalleses_Clientes,rfc=detalles['detalles'])
 			prodProv.cantidad = detalles['cantidad']

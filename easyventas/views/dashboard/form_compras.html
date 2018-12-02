@@ -45,6 +45,7 @@
                                   <tr>
                                     <th>Producto</th>
                                     <th>Descripcion</th>
+                                    <th>Precio</th>
                                     <th>Cantidad</th>
                                     <th>Total</th>
                                     <th>Eliminar</th>
@@ -67,6 +68,27 @@
                       <button type="button" class="btn bt-sm btn-success" onclick="guardarOrdenCompra()">Generar</button>
                     </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-md">
+                  <label class="">Sub-Total: </label>
+                   <input type="number" id="input-subtotal" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/>
+                  </div>
+                </div>
+               <div class="row">
+                  <div class="col-md">
+                  <label class="">Impuestos (%): </label>
+                   <input type="number" id="input-impuestos" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" onkeyup="total()"value="16"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                <label class="">Total: </label>
+                 <input type="number"id="input-total" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/>
+                </div>
+              </div>
+
+
             </div>
         </div>
     </div>
@@ -74,8 +96,8 @@
 
 
 <!------MODAL DE PROVEEDORES---->
-<div class="modal fade modal-lg" id="modal-info" tabindex="-1" role="dialog"  aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+<div class="modal fade" id="modal-info" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <input id ="input_filtro_modal" onkeyup="buscar()" class="form-control" type="text" placeholder="Buscar..">
@@ -143,7 +165,7 @@ function llenarTabla(data){
         tr.innerHTML = '<td>'+ data[i].nombre +'</td>'  +
         '<td>'+ data[i].descripcion +'</td>'  +
         '<td>$'+ data[i].precio +'</td>'  +
-        '<td><a class="btn btn-success text-white" onclick="seleccionarProveedor(this)" data-dismiss="modal" >Seleccionar </a></td>' 
+        '<td><a class="btn btn-success text-white" onclick="seleccionarProducto(this)" data-dismiss="modal" >Seleccionar </a></td>' 
       cuerpo.appendChild(tr);
 
       
@@ -151,19 +173,20 @@ function llenarTabla(data){
     }
 
   }
-function seleccionarProveedor(boton){
+function seleccionarProducto(boton){
 var nombre = boton.parentNode.parentNode.children[0].textContent;
 var descripcion = boton.parentNode.parentNode.children[1].textContent;
-var precio = boton.parentNode.parentNode.children[1].textContent.replace('$','');
+var precio = boton.parentNode.parentNode.children[2].textContent.replace('$','');
 var tablaCuerpo = document.getElementById('tabla_lista').children[1];
 var tr = document.createElement('tr');
     tr.id = "0"
         tr.innerHTML = 
         '<td>'+ nombre +'</td>'  +
         '<td>'+ descripcion +'</td>'  +
-        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="'+ precio +'"/></td>'  +
-        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" value="0"/></td>'  +
-        '<td><a class="btn btn-secondary font-white" onclick="removerProducto(this)" >Eliminar </a></td>'  
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" readonly value="'+ precio +'"/></td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" onchange="sumar(this)" value="0"/></td>'  +
+         '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/></td>'  +
+        '<td><a class="btn btn-secondary text-white" onclick="removerProducto(this)" >Eliminar </a></td>'  
         tablaCuerpo.appendChild(tr);
 
 }
@@ -173,33 +196,46 @@ var trEliminar = boton.parentNode.parentNode;
 document.getElementById('tabla_lista').children[1].removeChild(tr);
 }
 
-function guardarProveedores() {
+function guardarDetalles() {
   //serializamos el json para guardar todos
 var tablaDetalles = document.getElementById('tabla_lista').children[1]
-var prod = document.getElementById('producto_id').textContent
+
+//productos de detalle de compra
 prod = prod.split(':')[0]
 var json ="[";
   for (var i = 0; i < tablaDetalles.childElementCount; i++) {
     json += (i==0)?'{':',{';
     json += '"id":'+tablaDetalles.children[i].id +',';
-    json += '"producto":"'+ prod +'",';
-    json += '"proveedor":"'+ tablaDetalles.children[i].children[0].textContent +'",';
-    json += '"cantidad":'+ tablaDetalles.children[i].children[2].children[0].value +',';
-    json += '"precio":'+ tablaDetalles.children[i].children[3].children[0].value +'';
+    json += '"cantidad":"'+ tablaDetalles.children[i].children[3].children[0].value +'",';
+    json += '"total_detalle":'+ tablaDetalles.children[i].children[4].children[0].value +'';
     json += '}';
   }
   json+="]"
 
 
 var x = new XMLHttpRequest();
+var subtotal= document.getElementById('input-subtotal').value;
+var impuestos = document.getElementById('input-impuestos').value;
+var total = document.getElementById('total').value;
+var fechaEntrega = document.getElementById('id_fecha_entrega').value;
+var proveedor = document.getElementById('id_proveedor')
+var proveedorRFC  = proveedor.options[proveedor.selectedIndex].text;
+
+
 var frmd = new FormData()
+frmd.append('subtotal',subtotal)
+frmd.append('impuestos',impuestos)
+frmd.append('total',total)
+frmd.append('fechaEntrega',fechaEntrega)
+frmd.append('proveedorRFC',proveedorRFC)
+
 frmd.append('lista',json)
     x.open('POST','../../../productos/proveedores_guardar/');
     x.onreadystatechange = function (e){
       if(x.readyState == 4){
         if(x.status === 200){
           x.addEventListener('load', function(e){
-              var json = JSON.parse(x.responseText.replace(/\'/g,'"'));
+              var json = x.responseText.replace(/\'/g,'"');
 
                   //llenamos la tabla
                   console.log(json);
@@ -212,6 +248,32 @@ frmd.append('lista',json)
 
 }
 
+function sumar(input){
+var tr = input.parentNode.parentNode;
+var precio = tr.children[2].children[0].value;
+
+var cantidad = input.value;
+var totalProducto = precio*cantidad;
+tr.children[4].children[0].value = totalProducto;
+
+//tabla con  los detalles y calculo de subtotal
+var tabla = document.getElementById('tabla_lista').children[1];
+
+var subtotal = 0;
+for (var i = 0; i < tabla.childElementCount; i++) {
+  subtotal += tabla.children[i].children[4].children[0].value;
+  }
+  document.getElementById('input-subtotal').value = subtotal;
+  total()
+
+}
+
+function total(){
+    var impuestos = parseFloat(document.getElementById('input-impuestos').value);
+    var subtotal= parseFloat(document.getElementById('input-subtotal').value);
+    var total = subtotal + (subtotal* (impuestos/100) );
+    document.getElementById('input-total').value = total;
+}
 
 
 </script>

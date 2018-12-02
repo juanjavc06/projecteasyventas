@@ -39,8 +39,6 @@
                                 <td><a class="btn btn-info" href="{% url  'productos_editar' f.id %}">Editar</a></td>
                                 <td><a class="btn btn-warning" href="{% url  'proveedores_producto' f.id %}">Proveedores</a></td>
                               </tr>
-
-
                               {% endfor %}
                               </table>
                             </div>
@@ -84,7 +82,8 @@
         tr.innerHTML = '<td>'+ data[i].nombre +'</td>'  +
         '<td>'+ data[i].descripcion +'</td>'  +
         '<td>$ '+ data[i].precio +'</td>'  +
-        '<td><a class="btn btn-info" href="../../productos/editar/'+  data[i].id +'/ " >Editar </a></td>'  
+        '<td><a class="btn btn-info" href="../../productos/editar/'+  data[i].id +'/ " >Editar </a></td>'  +
+         '<td><a class="btn btn-warning" href="../../productos/proveedores/'+data[i].id +'">Proveedores</a></td>'
       cuerpo.appendChild(tr);
     }
 
