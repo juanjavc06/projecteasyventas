@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
-
+<<<<<<< HEAD
 from django.core.serializers import *
 from django.shortcuts import *
-
+=======
+from django.core import serializers
 from django.urls import reverse_lazy
-
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
 
 from django.http import JsonResponse, HttpResponse
 
@@ -18,8 +19,7 @@ from .forms import *
 
 
 def index(request):
-	queryset = Productos.objects.all()
-	return render(request, "dashboard/dashboard.html", {"productos":queryset})
+	return render(request, "dashboard/dashboard.html")
 
 def login(request):
 	return render(request, "dashboard/login.html")
@@ -51,10 +51,8 @@ def form_productos_view(request):
 	return render(request,"dashboard/form_productos.html", context)
 
 def ultimos_productos(request):
-	print('cerdito :v')
 	queryset = Productos.objects.all()
-	print(queryset)
-	return render(request, "forms/ultimos_productos.html", {"productos": queryset})
+	return render(request, "forms/ultimos_productos.html", {"form": queryset})
 
 def productos_buscar(request):
 	queryset = Productos.objects.all()
@@ -123,7 +121,7 @@ class form_proveedores_editar(generic.UpdateView):
     fields = '__all__'
     success_url = '../../../proveedores/'
 
-
+<<<<<<< HEAD
 #------------RELACION PRODUCTOS PROVEEDORES
 
 def form_productos_proveedores(request,id):
@@ -135,6 +133,8 @@ def form_productos_proveedores(request,id):
 def eliminar_proveedor_producto(request,id):
 	pass
 
+=======
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
 
 
 
@@ -248,9 +248,20 @@ def almacen_buscar(request):
 	return HttpResponse(str(datos))	
 
 
+
+<<<<<<< HEAD
+	return HttpResponse(str(datos))	
+
+
+
+
+
+
+=======
 #------------------------------------------REPORTES--------------------------------------------
 #class Reporte_Productos(View):
 #	def get(self,request,*args,**kwargs):
 #		reporte=render_pdf("reportes/reporte_productos.html")
 #		datos()
 #		return HttpResponse(reporte,content_type="")
+>>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
