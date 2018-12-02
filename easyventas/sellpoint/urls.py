@@ -20,6 +20,11 @@ urlpatterns = [
     path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),
     path('productos/getbyid', views.get_products_by_id,name="productos_getbyid"),
 
+
+    #PROVEEDORES POR PRODUCTO
+    path('productos/proveedores/<int:id>/',views.form_productos_proveedores,name='proveedores_producto'),
+    path('productos/proveedores_eliminar/<int:id>/',views.eliminar_proveedor_producto,name='eliminar_proveedor_producto'),
+
     #Usuarios
 
     path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),

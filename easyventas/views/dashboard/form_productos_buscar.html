@@ -27,7 +27,7 @@
                                     <th>Articulo</th>
                                     <th>Descripcion</th>
                                     <th>Precio</th>
-                                    <th>--</th>
+                                    <th colspan="2">Opciones</th>
                                   </tr>
                                 </thead>
                               
@@ -37,6 +37,7 @@
                                 <td>{{ f.descripcion }}</td>
                                 <td>{{ f.precio }}</td>
                                 <td><a class="btn btn-info" href="{% url  'productos_editar' f.id %}">Editar</a></td>
+                                <td><a class="btn btn-warning" href="{% url  'proveedores_producto' f.id %}">Proveedores</a></td>
                               </tr>
 
 

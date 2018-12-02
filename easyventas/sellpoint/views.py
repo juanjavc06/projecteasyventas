@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
-from django.core import serializers
+from django.core.serializers import *
+from django.shortcuts import *
 
 from django.http import JsonResponse, HttpResponse
 
@@ -112,6 +113,15 @@ class form_proveedores_editar(generic.UpdateView):
     success_url = '../../../proveedores/'
 
 #------------RELACION PRODUCTOS PROVEEDORES
+
+def form_productos_proveedores(request,id):
+	producto 	= get_object_or_404(Productos,id=id)
+	proveedores = Productos_Proveedores.objects.filter(producto__id=producto.id)
+	context 	= {'producto':producto, 'proveedores': proveedores}
+	return render(request, 'dashboard/form_productos_proveedores.html',context)
+
+def eliminar_proveedor_producto(request,id):
+	pass
 
 
 
@@ -233,3 +243,9 @@ def almacen_buscar(request):
 			return render(request, 'dashboard/form_almacen.html',{'form': queryset})
 
 	return HttpResponse(str(datos))	
+
+
+
+
+
+
