@@ -29,11 +29,7 @@ def comprar(request):
 		#COMENTARIO
 	return HttpResponse(str(objects))
 
-def myview(request):
-    #resp = HttpResponse(content_type='application/pdf')
-    #result = generate_pdf('reportes/reporte_balance.html', file_object=resp)
-    #return result
-	return render(request, "reportes/reporte_balance.html")
+
 
 def form_categorias_view(request):
 	form = FormCategoria_Productos(request.POST)
@@ -326,188 +322,21 @@ def startSellPoint(request):
 	return render(request, "sellpoint/sellpoint.html")
 
 #------------------------------------------REPORTES--------------------------------------------
-class ReporteProductos(generic.View):
-
-	def cabecera(self,pdf):
-		pdf.drawString(300,790,u"Reporte")	
-		pdf.drawString(230,770,u"Reporte de Productos Registrados")
-		
-	def tabla(self,pdf,y):
-		encabezados = ('Producto','Precio','Categoria')
-		detalle_productos = [(Productos.nombre, Productos.precio, Productos.categoria) for Productos in Productos.objects.all()]
-		detalle_productos = Table([encabezados]+detalle_productos,colWidths=[2,5,5,5])
-		detalle_productos.setStyle(TableStyle([('ALIGN',(0,0),(3,0),'CENTER'),('GRID', (0, 0), (-1, -1), 1),('FONTSIZE', (0, 0), (-1, -1), 10),]))
-		detalle_productos.wrapOn(pdf, 800, 600)
-		detalle_productos.drawOn(pdf, 600,y)
-
-	def get(self,request,*args,**kwargs):
-		response = HttpResponse(content_type='aplication/pdf')
-		buffer= BytesIO()
-		pdf = canvas.Canvas(buffer)
-		self.cabecera(pdf)
-		y=600
-		self.tabla(pdf,y)
-		pdf.showPage()
-		pdf.save()
-		pdf=buffer.getvalue()
-		buffer.close()
-		response.write(pdf)
-		return response
-
-# ======================= CLASE reportePDF =========================
-
-#class reportePDF(object):
-#   """Exportar una lista de diccionarios a una tabla en un
-#       archivo PDF."""
-#    
-#    def __init__(self, titulo, cabecera, datos, nombrePDF):
-#        super(reportePDF, self).__init__()
-#
-#        self.titulo = titulo
-#        self.cabecera = cabecera
-#        self.datos = datos
-#        self.nombrePDF = nombrePDF
-#
-#        self.estilos = getSampleStyleSheet()
-#
-#    @staticmethod
-#    def _encabezadoPiePagina(canvas, archivoPDF):
-#        """Guarde el estado de nuestro lienzo para que podamos aprovecharlo"""
-      
-#        canvas.saveState()
-#        estilos = getSampleStyleSheet()
-#
-#        alineacion = ParagraphStyle(name="alineacion", alignment=TA_RIGHT,parent=estilos["Normal"])
- 
-        # Encabezado
-#        encabezadoNombre = Paragraph("EasyVentas", estilos["Normal"])
-#        anchura, altura = encabezadoNombre.wrap(archivoPDF.width, archivoPDF.topMargin)
- #       encabezadoNombre.drawOn(canvas, archivoPDF.leftMargin, 736)
-
-  #      fecha = utcnow().to("local").format("dddd, DD - MMMM - YYYY", locale="es")
-   #     fechaReporte = fecha.replace("-", "de")
-
-    #    encabezadoFecha = Paragraph(fechaReporte, alineacion)
-     #   anchura, altura = encabezadoFecha.wrap(archivoPDF.width, archivoPDF.topMargin)
-      #  encabezadoFecha.drawOn(canvas, archivoPDF.leftMargin, 736)
- 
-        # Pie de página
-       # piePagina = Paragraph("EasyVentas Reporte", estilos["Normal"])
-        #anchura, altura = piePagina.wrap(archivoPDF.width, archivoPDF.bottomMargin)
-        #piePagina.drawOn(canvas, archivoPDF.leftMargin, 15 * mm + (0.2 * inch))
- 
-        # Suelta el lienzo
-        #canvas.restoreState()
-
-#    def convertirDatos(self): 
- #      estiloEncabezado = ParagraphStyle(name="estiloEncabezado", alignment=TA_LEFT,
- #                                         fontSize=10, textColor=white,
-  #                                        fontName="Helvetica-Bold",
-   #                                       parent=self.estilos["Normal"])
-
-    #    estiloNormal = self.estilos["Normal"]
-     #   estiloNormal.alignment = TA_LEFT
-
- #       claves, nombres = zip(*[[k, n] for k, n in self.cabecera])
-  #      encabezado =([Paragraph(str(nombre),estiloEncabezado) for nombre in nombres])
-   #     nuevosDatos = [tuple(encabezado)]
-
-    #    for dato in self.datos:
-
-     #        nuevosDatos.append([Paragraph(str(dato[clave]), estiloNormal) for clave in claves])
-            
-      #  return nuevosDatos
-        
-    #def Exportar(self):
-        
-
-     #   alineacionTitulo = ParagraphStyle(name="centrar", alignment=TA_CENTER, fontSize=13,
-      #                                    leading=10, textColor=purple,
-       #                                   parent=self.estilos["Heading1"])
-        
-   #     self.ancho, self.alto = letter
-
-    #    convertirDatos = self.convertirDatos()
-    
- #       tabla = Table(convertirDatos, colWidths=(self.ancho-100)/len(self.cabecera), hAlign="CENTER")
- #       tabla.setStyle(TableStyle([
- #           ("BACKGROUND", (0, 0),(-1, 0), purple),
- #           ("ALIGN", (0, 0),(0, -1), "LEFT"),
- #           ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), # Texto centrado y alineado a la izquierda
- #           ("INNERGRID", (0, 0), (-1, -1), 0.50, black), # Lineas internas
- #           ("BOX", (0, 0), (-1, -1), 0.25, black), # Linea (Marco) externa
- #           ]))
-
- #       historia = []
- #       historia.append(Paragraph(self.titulo, alineacionTitulo))
- #       historia.append(Spacer(1, 0.16 * inch))
- #       historia.append(tabla)
-
-        #archivoPDF = SimpleDocTemplate(self.nombrePDF, leftMargin=50, rightMargin=50, pagesize=letter,
-         #                              title="Reporte PDF", author="Andres Niño")
-        
-       # try:
-        #    archivoPDF.build(historia, onFirstPage=self._encabezadoPiePagina,
-         #                    onLaterPages=self._encabezadoPiePagina,
-          #                   canvasmaker=numeracionPaginas)
-            
-         # +------------------------------------+
-     #       return "Reporte generado con éxito."
-         # +------------------------------------+
-      #  except PermissionError:
-         # +--------------------------------------------+  
-       #     return "Error inesperado."
-         # +--------------------------------------------+
+def ReporteProductos(request):
+    resp = HttpResponse(content_type='application/pdf')
+    queryset = Productos.objects.all()
+    context = {    'productos':queryset}
+    return generate_pdf('reportes/reporte_productos.html', file_object=resp,context=context)
 
 
-# ================== CLASE numeracionPaginas =======================
+def ReporteCompras(request):
+	resp= HttpResponse(content_type="application/pdf")
+	queryset = Compras.objects.all()
+	context = { 'compras':queryset}
+	return generate_pdf('reportes/reporte_compras.html',file_object=resp,context=context)
 
-"""class numeracionPaginas(canvas.Canvas):
-    def __init__(self, *args, **kwargs):
-        canvas.Canvas.__init__(self, *args, **kwargs)
-        self._saved_page_states = []
-
-    def showPage(self):
-        self._saved_page_states.append(dict(self.__dict__))
-        self._startPage()
-
-    def save(self):
-       
-        numeroPaginas = len(self._saved_page_states)
-        for state in self._saved_page_states:
-            self.__dict__.update(state)
-            self.draw_page_number(numeroPaginas)
-            canvas.Canvas.showPage(self)
-        canvas.Canvas.save(self)
- 
-    def draw_page_number(self, conteoPaginas):
-        self.drawRightString(204 * mm, 15 * mm + (0.2 * inch),
-                             "Página {} de {}".format(self._pageNumber, conteoPaginas))       """ 
-
-
-# ===================== FUNCIÓN generarReporte =====================
-"""
-def generarReporteProductos():
-   
-    datos = [(Productos.nombre, Productos.precio, Productos.categoria) for Productos in Productos.objects.all()]
-
-    titulo = "REPORTE DE PRODUCTOS EN EL SISTEMA"
-
-    cabecera = (
-        ("nombre", "nombre"),
-        ("precio", "precio"),
-        ("categoria", "categoria"),
-        )
-
-    nombrePDF = "Reporte de productos en sistema.pdf"
-
-    reporte = reportePDF(titulo, cabecera, datos, nombrePDF).Exportar()
-    print(reporte)
-
-
-# ======================== LLAMAR FUNCIÓN ==========================
-
-generarReporteProductos()
-		
-	
-"""
+def ReporteVentas(request):
+	resp = HttpResponse(content_type="application/pdf")
+	queryset = Ventas.objects.all()
+	context= {'ventas': queryset}
+	return generate_pdf('reportes/reporte_ventas.html',file_object=resp,context=context)

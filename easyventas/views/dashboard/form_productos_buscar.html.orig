@@ -27,11 +27,10 @@
                                     <th>Articulo</th>
                                     <th>Descripcion</th>
                                     <th>Precio</th>
-<<<<<<< HEAD
+
                                     <th colspan="2">Opciones</th>
-=======
                                     <th>Acciones</th>
->>>>>>> a7f01224d3f5f9858363e72302a9e272743b6ff7
+
                                   </tr>
                                 </thead>
                               
