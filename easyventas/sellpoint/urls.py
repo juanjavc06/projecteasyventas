@@ -1,6 +1,7 @@
 from django.urls import path
 from sellpoint import views
 
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('', views.index),
     #PUNTO DE VENTA
     path('sellpoint/', views.startSellPoint,name="sellpoint"),
+    path('sellpoint/comprar', csrf_exempt(views.comprar),name="sellpoint_comprar"),
 
     #Categorias de Productos
     path('categorias/nuevo/', views.form_categorias_view, name="categoria_nueva_view"),
@@ -21,7 +23,6 @@ urlpatterns = [
     path('productos/buscar/', views.productos_buscar, name="producto_buscar"),
     path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),
     path('productos/getbyid', views.get_products_by_id,name="productos_getbyid"),
-
 
     #PROVEEDORES POR PRODUCTO
     path('productos/proveedores/<int:id>/',views.form_productos_proveedores,name='proveedores_producto'),
@@ -37,8 +38,8 @@ urlpatterns = [
     path('proveedores/editar/<int:pk>/', views.form_proveedores_editar.as_view(), name="proveedores_editar"),
 
     #orden de compra
-     path('compras/nuevo/', views.form_orden_compra, name="nueva_orden_compra"),
-
+    path('compras/nuevo/', views.form_orden_compra, name="nueva_orden_compra"),
+    
     #zona
     path('zona/nueva/',views.zona,name="zona_nueva"),
     path('zona/buscar/',views.zona_buscar,name="zona_buscar"),
@@ -54,6 +55,8 @@ urlpatterns = [
     path('inventario/nuevo/',views.inventario,name="inventario_nuevo"),
     path('inventario/buscar/',views.inventario_buscar,name="inventario_buscar"),
     path('inventario/editar/<int:pk>/',views.inventario_editar.as_view(),name="inventario_editar"),
+
+    path('pdf',views.myview,name="inventario_editar"),
 
 ]
 

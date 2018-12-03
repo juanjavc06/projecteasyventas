@@ -4,18 +4,13 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers import *
 from django.shortcuts import *
-
 from django.urls import reverse_lazy
 import json
-
 from django.http import JsonResponse, HttpResponse
-
-
 from  .models import *
-from .forms import * 
-
+from .forms import *
+from .reports import * 
 # Create your views here.
-
 
 def index(request):
 	queryset = Productos.objects.all()
@@ -23,6 +18,22 @@ def index(request):
 
 def login(request):
 	return render(request, "dashboard/login.html")
+
+def startSellPoint(request):
+	return render(request, "sellpoint/sellpoint.html")
+
+def comprar(request):
+	if request.method == 'POST':
+		objects = json.loads(request.POST.get("compra"))
+		#for target_list in expression_list:
+		#COMENTARIO
+	return HttpResponse(str(objects))
+
+def myview(request):
+    #resp = HttpResponse(content_type='application/pdf')
+    #result = generate_pdf('reportes/reporte_balance.html', file_object=resp)
+    #return result
+	return render(request, "reportes/reporte_balance.html")
 
 def form_categorias_view(request):
 	form = FormCategoria_Productos(request.POST)
@@ -157,7 +168,7 @@ def eliminar_proveedor_producto(request,id):
 
 #------------ORDEN DE COMPRA
 
-def form_orden_compra(request):`
+def form_orden_compra(request):
 	if request.method == "GET":
 		form = FormCompras()
 		context = {	'form':form	}
@@ -179,16 +190,28 @@ def form_orden_compra(request):`
 		return HttpResponse('Guardado con Exito')
 
 
-
-
-
-
-
-
+def form_comprar(request):
+	if request.method == "GET":
+		form = FormCompras()
+		context = {	'form':form	}
+		return render(request,"dashboard/form_compras.html", context)
+	else:
+		objects = json.loads(request.POST.get('detalles'))
+		print(objects)
+		for detalles in objects:
+			print(detalles['producto'])
+			if detalles['id'] != 0:
+				prodProv = get_object_or_404(Productos_detalleses,id=detalles['id'])
+			else:
+				prodProv = Productos_detalleses()
+			prodProv.producto = get_object_or_404(Productos,nombre=detalles['producto'])
+			prodProv.detalles = get_object_or_404(detalleses_Clientes,rfc=detalles['detalles'])
+			prodProv.cantidad = detalles['cantidad']
+			prodProv.costo_total = detalles['precio']
+			prodProv.save()
+		return HttpResponse('Guardado con Exito')
 #-------------------------Seccion Jenny -------------------------------------------
-
-
-#ZONA
+# #ZONA
 def zona(request):
 	form = FormZona(request.POST)
 	if form.is_valid():
@@ -291,24 +314,12 @@ def almacen_buscar(request):
 				datos.append({"almacen": str(dt.almacen), 'zona': str(dt.zona)})
 		else:
 			return render(request, 'dashboard/form_almacen_buscar.html',{'form': queryset})
-
 	return HttpResponse(str(datos))	
 
 
-<<<<<<< HEAD
-	return HttpResponse(str(datos))	
-
-
-
-#SELL POINT DEF
-def startSellPoint(request):
-	return render(request, "sellpoint/sellpoint.html")
-
-=======
 #------------------------------------------REPORTES--------------------------------------------
 #class Reporte_Productos(View):
 #	def get(self,request,*args,**kwargs):
 #		reporte=render_pdf("reportes/reporte_productos.html")
 #		datos()
 #		return HttpResponse(reporte,content_type="")
->>>>>>> 1fb6db935103e348eff72a2a0b1cfa4b998a8e8f

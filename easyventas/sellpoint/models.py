@@ -111,15 +111,6 @@ class Almacen(models.Model):
 	almacen 		= models.CharField(max_length=255)
 	
 	def __str__(self):
-<<<<<<< HEAD
-		return str(self.usuarios)
-		
-class Almacen(models.Model):
-	almacen 		= models.CharField(max_length=255)
-	
-	def __str__(self):
-=======
->>>>>>> 1fb6db935103e348eff72a2a0b1cfa4b998a8e8f
 		return str(self.almacen)
 
 class Zona(models.Model):
