@@ -126,7 +126,6 @@ def form_productos_view(request):
 	return render(request,"dashboard/form_productos.html", context)
 
 def ultimos_productos(request):
-	print('cerdito :v')
 	queryset = Productos.objects.all()
 	print(queryset)
 	return render(request, "forms/ultimos_productos.html", {"productos": queryset})
@@ -233,30 +232,51 @@ def eliminar_proveedor_producto(request,id):
 	pass
 
 #------------ORDEN DE COMPRA
-
+@csrf_exempt
 def form_orden_compra(request):
 	if request.method == "GET":
 		form = FormCompras()
 		context = {	'form':form	}
 		return render(request,"dashboard/form_compras.html", context)
 	else:
+
 		objects = json.loads(request.POST.get('detalles'))
-		compra = Compras()
+		print(objects)
+		compra = Compras().objects.create()
 		compra.sub_total =request.POST.get('subtotal') 
 		compra.impuestos =request.POST.get('impuestos') 
+		compra.fecha_entrega = request.POST.get('fechaEntrega')
+		compra.total = request.POST.get('total')
+		compra.proveedor =  get_object_or_404(Proveedores_Clientes,rfc=request.POST.get('proveedorRFC'))
 
-
+		compra.save()
+		print(compra.id)
 		for detalles in objects:
-			if detalles['id'] != 0:
-				detalles = get_object_or_404(Compras_Detalle,id=detalles['id'])
+			detalle = Compras_Detalle()
+			detalle.compra = compra
+			detalle.producto = get_object_or_404(Productos,nombre=detalles['producto'])
+			detalle.cantidad = detalles['cantidad']
+			detalle.total_producto = detalles['total_detalle']
+			detalle.save()
+			#debemos aumentar el inventario del articulo
+			inv, creado = Inventario.objects.get_or_create(producto=detalle.producto.nombre)
+			if creado:
+				inv.cantidad = detalle.cantidad
+				inv.producto = detalle.producto
+				inv.zona 	 = get_object_or_404(Zona,id=1)
 			else:
-				detalles = Compras_Detalle()
-			prodProv.producto = get_object_or_404(Productos,nombre=detalles['producto'])
-			prodProv.detalles = get_object_or_404(detalleses_Clientes,rfc=detalles['detalles'])
-			prodProv.cantidad = detalles['cantidad']
-			prodProv.costo_total = detalles['precio']
-			prodProv.save()
+				inv.cantidad = inv.cantidad +detalle.cantidad
+			inv.save()
+			#se genera el movimiento
+			movimiento = Movimientos()
+			movimiento.tipo = 'Compra'
+			movimiento.producto = detalle.producto
+			movimiento.cantidad = detalle.cantidad
+			movimiento.zona = inv.zona
+			movimiento.save()
 		return HttpResponse('Guardado con Exito')
+	return HttpResponse('Error al guardar.')
+
 
 #-------------------------Seccion Jenny -------------------------------------------
 # #ZONA
@@ -364,3 +384,28 @@ def almacen_buscar(request):
 			return render(request, 'dashboard/form_almacen_buscar.html',{'form': queryset})
 	return HttpResponse(str(datos))	
 
+
+
+#SELL POINT DEF
+def startSellPoint(request):
+	return render(request, "sellpoint/sellpoint.html")
+
+#------------------------------------------REPORTES--------------------------------------------
+def ReporteProductos(request):
+    resp = HttpResponse(content_type='application/pdf')
+    queryset = Productos.objects.all()
+    context = {    'productos':queryset}
+    return generate_pdf('reportes/reporte_productos.html', file_object=resp,context=context)
+
+
+def ReporteCompras(request):
+	resp= HttpResponse(content_type="application/pdf")
+	queryset = Compras.objects.all()
+	context = { 'compras':queryset}
+	return generate_pdf('reportes/reporte_compras.html',file_object=resp,context=context)
+
+def ReporteVentas(request):
+	resp = HttpResponse(content_type="application/pdf")
+	queryset = Ventas.objects.all()
+	context= {'ventas': queryset}
+	return generate_pdf('reportes/reporte_ventas.html',file_object=resp,context=context)

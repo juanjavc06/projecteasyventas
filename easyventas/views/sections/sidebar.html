@@ -15,16 +15,16 @@
                                <!--------------------------- PRODUCTOS----------------->
                                       <li class="nav-item ">
                                         <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-productos" aria-controls="submenu-1">
-                                          <i class="fa fa-cart-arr"></i>
+                                          <i class="fas fa-dolly"></i>
                                           Productos <span class="badge badge-success">6</span>
                                         </a>
                                         <div id="submenu-productos" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'productos_nuevo' %}">Anadir Producto</a>
+                                              <a class="nav-link" href="{% url 'productos_nuevo' %}">Añadir Producto</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'producto_buscar' %}">Editar Productos</a>
+                                              <a class="nav-link" href="{% url 'producto_buscar' %}">Lista Productos</a>
                                             </li>
                                           </ul>
                                         </div>
@@ -39,7 +39,7 @@
                                         <div id="submenu-categorias" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'categoria_nueva_view' %}">Anadir Categoria</a>
+                                              <a class="nav-link" href="{% url 'categoria_nueva_view' %}">Añadir Categoria</a>
                                             </li>
 
                                           </ul>
@@ -56,10 +56,10 @@
                                         <div id="submenu-proveedores" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'proveedor_nuevo' %}">Anadir Cliente/Proveedor</a>
+                                              <a class="nav-link" href="{% url 'proveedor_nuevo' %}">Añadir Cliente/Proveedor</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'proveedores_buscar' %}">Editar Cliente/Proveedor</a>
+                                              <a class="nav-link" href="{% url 'proveedores_buscar' %}">Lista Cliente/Proveedor</a>
                                             </li>
                                           </ul>
                                         </div>
@@ -90,10 +90,10 @@
                                         <div id="submenu-inventario" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'inventario_nuevo' %}">Anadir Inventario</a>
+                                              <a class="nav-link" href="{% url 'inventario_nuevo' %}">Añadir Inventario</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'inventario_buscar' %}">Editar Inventario</a>
+                                              <a class="nav-link" href="{% url 'inventario_buscar' %}">Lista Inventario</a>
                                             </li>
                                           </ul>
                                         </div>
@@ -110,10 +110,10 @@
                                         <div id="submenu-zonas" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'zona_nueva' %}">Anadir Zona</a>
+                                              <a class="nav-link" href="{% url 'zona_nueva' %}">Añadir Zona</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'zona_buscar' %}">Editar Zona</a>
+                                              <a class="nav-link" href="{% url 'zona_buscar' %}">Lista Zona</a>
                                             </li>
                                             
                                           </ul>
@@ -129,41 +129,36 @@
                                         <div id="submenu-almacen" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'almacen_nuevo' %}">Anadir Almacen</a>
+                                              <a class="nav-link" href="{% url 'almacen_nuevo' %}">Añadir Almacen</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{% url 'almacen_buscar' %}">Editar Almacen</a>
+                                              <a class="nav-link" href="{% url 'almacen_buscar' %}">Lista Almacen</a>
                                             </li>
                                             
                                           </ul>
                                         </div>
                                     </li>
-
-                     
-                    <!--------------------------- REPORTES----------------->
-                    <li class="nav-divider">
-                        Reportes
-                    </li>
-                        <!--------------------------- PRODUCTOS----------------->
+                                      <!--------------------------- REPORTES----------------->
                                      <li class="nav-item ">
                                         <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-reportes_productos" aria-controls="submenu-1">
                                           <i class="fa fa-folder"></i>
-                                          Productos <span class="badge badge-success">6</span>
+                                          Reportes <span class="badge badge-success">6</span>
                                         </a>
                                         <div id="submenu-reportes_productos" class="collapse submenu" style="">
                                           <ul class="nav flex-column">
                                             <li class="nav-item">
-                                              <a class="nav-link" href="#">Productos mas vendidos</a>
+                                              <a class="nav-link" href="{% url 'reporte_productos' %}">Productos</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="#">Productos menos vendidos</a>
+                                              <a class="nav-link" href="{%url 'reporte_ventas' %}">Compras</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{%url 'reporte_compras'%}">Ventas</a>
                                             </li>
                                           </ul>
                                         </div>
                                     </li>
-
-               
-            </div>
-        </nav>
-    </div>
+                        </div>
+                </nav>
+         </div>
 </div>

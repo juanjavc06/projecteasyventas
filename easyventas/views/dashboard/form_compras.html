@@ -57,12 +57,8 @@
                               </tbody>
                               </table>
                             </div>
-
-                           
                     </div>
                       <button type="button" class="btn bt-sm btn-primary" data-toggle="modal"  data-target="#modal-info" onclick="buscar()">Agregar <i class="fa fa-plus"></i></button>
-
-
                     </div>
                     <div class="col-md-12 float-right">
                       <button type="button" class="btn bt-sm btn-success" onclick="guardarOrdenCompra()">Generar</button>
@@ -87,8 +83,6 @@
                  <input type="number"id="input-total" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/>
                 </div>
               </div>
-
-
             </div>
         </div>
     </div>
@@ -184,7 +178,7 @@ var tr = document.createElement('tr');
         '<td>'+ nombre +'</td>'  +
         '<td>'+ descripcion +'</td>'  +
         '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" readonly value="'+ precio +'"/></td>'  +
-        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" onchange="sumar(this)" value="0"/></td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" oninput="sumar(this)" value="0"/></td>'  +
          '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/></td>'  +
         '<td><a class="btn btn-secondary text-white" onclick="removerProducto(this)" >Eliminar </a></td>'  
         tablaCuerpo.appendChild(tr);
@@ -196,17 +190,15 @@ var trEliminar = boton.parentNode.parentNode;
 document.getElementById('tabla_lista').children[1].removeChild(tr);
 }
 
-function guardarDetalles() {
+function guardarOrdenCompra() {
   //serializamos el json para guardar todos
 var tablaDetalles = document.getElementById('tabla_lista').children[1]
-
-//productos de detalle de compra
-prod = prod.split(':')[0]
 var json ="[";
   for (var i = 0; i < tablaDetalles.childElementCount; i++) {
     json += (i==0)?'{':',{';
     json += '"id":'+tablaDetalles.children[i].id +',';
-    json += '"cantidad":"'+ tablaDetalles.children[i].children[3].children[0].value +'",';
+    json += '"producto":"'+ tablaDetalles.children[i].children[0].textContent +'",';
+    json += '"cantidad":'+ tablaDetalles.children[i].children[3].children[0].value +',';
     json += '"total_detalle":'+ tablaDetalles.children[i].children[4].children[0].value +'';
     json += '}';
   }
@@ -214,14 +206,14 @@ var json ="[";
 
 
 var x = new XMLHttpRequest();
-var subtotal= document.getElementById('input-subtotal').value;
-var impuestos = document.getElementById('input-impuestos').value;
-var total = document.getElementById('total').value;
+var subtotal= parseFloat(document.getElementById('input-subtotal').value);
+var impuestos = parseFloat(document.getElementById('input-impuestos').value);
+var total = parseFloat(document.getElementById('input-total').value);
 var fechaEntrega = document.getElementById('id_fecha_entrega').value;
 var proveedor = document.getElementById('id_proveedor')
 var proveedorRFC  = proveedor.options[proveedor.selectedIndex].text;
 
-
+//informacion de la compra
 var frmd = new FormData()
 frmd.append('subtotal',subtotal)
 frmd.append('impuestos',impuestos)
@@ -229,8 +221,8 @@ frmd.append('total',total)
 frmd.append('fechaEntrega',fechaEntrega)
 frmd.append('proveedorRFC',proveedorRFC)
 
-frmd.append('lista',json)
-    x.open('POST','../../../productos/proveedores_guardar/');
+frmd.append('detalles',json)
+    x.open('POST','../../compras/nuevo/');
     x.onreadystatechange = function (e){
       if(x.readyState == 4){
         if(x.status === 200){

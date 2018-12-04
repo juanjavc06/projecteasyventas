@@ -58,7 +58,10 @@ urlpatterns = [
     path('inventario/buscar/',views.inventario_buscar,name="inventario_buscar"),
     path('inventario/editar/<int:pk>/',views.inventario_editar.as_view(),name="inventario_editar"),
 
-    path('pdf',views.myview,name="inventario_editar"),
+    #reportes
+    path('reporte/productos',views.ReporteProductos,name="reporte_productos"),
+    path('reportes/compras',views.ReporteCompras,name="reporte_compras"),
+    path('reporte/ventas',views.ReporteVentas,name="reporte_ventas"),
 
 ]
 
