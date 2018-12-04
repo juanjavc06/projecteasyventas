@@ -1,6 +1,6 @@
 var carrito_compra = {};
 var opciones_productos = [];
-var l = null;
+var rfc = "";
 $(document).ready(function(){
     $("#code-id-producto").on('input',function(e1){
         buscar_producto_por_id($(this).val());
@@ -64,7 +64,7 @@ function buscar_producto_por_id(id){
             if(x.status === 200){
                 x.addEventListener('load', function(e){
                     llenarTabladeProductosCoincidentes(JSON.parse(x.responseText.replace(/\'/g,'"')));
-                });'c'
+                });
             }
         }
     }
@@ -75,12 +75,27 @@ function agregar_producto(data){
     if (typeof carrito_compra[data.id] == "undefined") {
         data['cantidad']=1;
         if (carrito_compra.length <= 0) $("#car-shop tbody").html("");
-        $("#car-shop tbody").append('<tr data-id="'+data.id+'"><th scope="row"><a>'+data.id+'</a></th> <td>'+data.nombre+'</td> <td>'+parseFloat(data.precio).toFixed(2)+'</td> <td> <div class="form-group"> <div class="input-group mb-3"> <div class="input-group-prepend"> <button type="button" class="btn fas fa-angle-left sub"></button> </div> <input type="number" class="form-control quantity" value="'+data.cantidad+'"> <div class="input-group-append"> <button type="button" class="btn fas fa-angle-right add"></button> </div> </div> </div> </td> <td class="subtotal">'+parseFloat(data.precio).toFixed(2)+'</td> <td> <div class="btn-group"> <button class="btn btndata-danger active mdi mdi-close delete-product"></button</div></td></tr>');
+        $("#car-shop tbody").append('<tr data-id="'+data.id+'"><th scope="row"><a>'+data.id+'</a></th> <td>'+data.nombre+'</td> <td>'+parseFloat(data.precio).toFixed(2)+'</td> <td> <div class="form-group"> <div class="input-group mb-3"> <div class="input-group-prepend"> <button type="button" class="btn fas fa-angle-left sub"></button> </div> <input type="number" class="form-control quantity" value="'+data.cantidad+'"><input type="text" disabled class="unidad form-control" value="'+data.unidad_medida+'"> <div class="input-group-append"><div class="input-group-append"> <button type="button" class="btn fas fa-angle-right add"></button> </div> </div> </div> </td> <td class="subtotal">'+parseFloat(data.precio).toFixed(2)+'</td> <td> <div class="btn-group"> <button class="btn btndata-danger active mdi mdi-close delete-product"></button</div></td></tr>');
         carrito_compra[data.id] = data;
         actualizarTotal();        
     }else{
         error_yaestaencarro();
     }
+}
+
+function producto_en_existencia(id,cantidad){
+    var x = new XMLHttpRequest();
+    x.open('GET',productos_esta_existencia +'?id='+ id+'&cantidad='+cantidad);
+    x.onreadystatechange = function (e){
+        if(x.readyState == 4){
+            if(x.status === 200){
+                x.addEventListener('load', function(e){
+                    console.log(e);
+                });
+            }
+        }
+    }
+    x.send();    
 }
 
 function eliminar_producto(id){
@@ -100,10 +115,11 @@ function modificarCantidad(id,cantidad){
     }
 }
 function actualizarTotal(){
-    var total = 0.0;
-    for (var index in carrito_compra){ total+=(parseFloat(carrito_compra[index].cantidad) * parseFloat(carrito_compra[index].precio) );}
-    $("#subtotal").html(total);
-    $("#total").html(parseFloat(total + (total*0.16)).toFixed(2));
+    var subtotal = 0.0;
+    for (var index in carrito_compra){ subtotal+=(parseFloat(carrito_compra[index].cantidad) * parseFloat(carrito_compra[index].precio) );}
+    $("#subtotal").html(subtotal);
+    $("#total").html(parseFloat(subtotal + (subtotal*0.16)).toFixed(2));
+    return (subtotal).toFixed(2);
 }
 
 function actualizarPrecio(id){
@@ -143,10 +159,15 @@ function nuevacompra(){
 }
 
 function vender(){
+    var subtotal = actualizarTotal();
+    var buy = [];
+    for (var index in carrito_compra){ 
+        buy.push(carrito_compra[index])
+    }
     $.ajax({
         url: generar_venta,
         type:  'POST',
-        data:"compra="+JSON.stringify(opciones_productos),
+        data:"cliente=" + rfc +"&impuesto="+(subtotal*0.16)+"&subtotal="+ subtotal +"&compra="+JSON.stringify(buy),
         success: function(html){
             nuevacompra();
         }

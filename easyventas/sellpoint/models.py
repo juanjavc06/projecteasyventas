@@ -74,7 +74,7 @@ class Ventas(models.Model):
 	sub_total		= models.FloatField()
 	impuestos 		= models.FloatField()
 	total 			= models.FloatField()
-	cliente 		= models.ForeignKey(Proveedores_Clientes, on_delete=models.CASCADE, blank = True)
+	cliente 		= models.ForeignKey(Proveedores_Clientes, on_delete=models.CASCADE, blank = True,default=None)
 	def __str__(self):
 		return str(self.id)
 
@@ -112,13 +112,6 @@ class Almacen(models.Model):
 	
 	def __str__(self):
 
-		return str(self.usuarios)
-		
-class Almacen(models.Model):
-	almacen 		= models.CharField(max_length=255)
-	
-	def __str__(self):
-
 
 		return str(self.almacen)
 
@@ -131,7 +124,7 @@ class Zona(models.Model):
 
 class Inventario(models.Model):
 	existencias 	= models.IntegerField()
-	producto  		= models.CharField(max_length=200)
+	producto  		= models.ForeignKey(Productos,on_delete=models.CASCADE,default=0)
 	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE,default=0)
 
 	def __str__(self):

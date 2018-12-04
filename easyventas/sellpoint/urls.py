@@ -13,7 +13,7 @@ urlpatterns = [
     path('', views.index),
     #PUNTO DE VENTA
     path('sellpoint/', views.startSellPoint,name="sellpoint"),
-    path('sellpoint/comprar', csrf_exempt(views.comprar),name="sellpoint_comprar"),
+    path('sellpoint/comprar', csrf_exempt(views.generar_venta),name="sellpoint_comprar"),
 
     #Categorias de Productos
     path('categorias/nuevo/', views.form_categorias_view, name="categoria_nueva_view"),
@@ -28,6 +28,8 @@ urlpatterns = [
     path('productos/proveedores/<int:id>/',views.form_productos_proveedores,name='proveedores_producto'),
     path('productos/proveedores_eliminar/<int:id>/',views.eliminar_proveedor_producto,name='eliminar_proveedor_producto'),
     path('productos/proveedores_guardar/',views.guardar_proveedores_producto, name='guardar_proveedores_producto'),
+    path('productos/esta_existencia/',views.producto_en_existencia, name='productos_esta_existencia'),
+    
     #Usuarios
 
     path('productos/editar/<int:pk>/', views.form_productos_editar.as_view(), name="productos_editar"),

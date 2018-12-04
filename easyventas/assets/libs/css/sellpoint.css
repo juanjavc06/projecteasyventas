@@ -53,12 +53,14 @@ input[type="number"] {
     padding: 2px;
     height: 35px;
 }
-
-#car-shop tr .form-group .input-group .form-control{
+#car-shop tr .form-group .input-group .unidad{
+    max-width: 30px;
+    padding:2px;
+    max-height: 35px;
+    text-align: center;
+}
+#car-shop tr .form-group .input-group .quantity{
     max-width: 60px;
     max-height: 35px;
     text-align: center;
-    -webkit-appearance: textfield;
-    -moz-appearance:none;
-    appearance: unset;
 }
