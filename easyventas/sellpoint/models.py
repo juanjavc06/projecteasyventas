@@ -124,8 +124,8 @@ class Zona(models.Model):
 
 class Inventario(models.Model):
 	existencias 	= models.IntegerField()
-	producto  		= models.ForeignKey(Productos,on_delete=models.CASCADE,default=0)
-	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE,default=0)
+	producto  		= models.ForeignKey(Productos,on_delete=models.CASCADE)
+	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return str(self.id)

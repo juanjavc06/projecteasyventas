@@ -242,7 +242,7 @@ def form_orden_compra(request):
 
 		objects = json.loads(request.POST.get('detalles'))
 		print(objects)
-		compra = Compras().objects.create()
+		compra = Compras()
 		compra.sub_total =request.POST.get('subtotal') 
 		compra.impuestos =request.POST.get('impuestos') 
 		compra.fecha_entrega = request.POST.get('fechaEntrega')
@@ -254,12 +254,14 @@ def form_orden_compra(request):
 		for detalles in objects:
 			detalle = Compras_Detalle()
 			detalle.compra = compra
+			#print(detalles['producto'])
 			detalle.producto = get_object_or_404(Productos,nombre=detalles['producto'])
 			detalle.cantidad = detalles['cantidad']
 			detalle.total_producto = detalles['total_detalle']
 			detalle.save()
+			#print(detalle.id)
 			#debemos aumentar el inventario del articulo
-			inv, creado = Inventario.objects.get_or_create(producto=detalle.producto.nombre)
+			inv, creado = Inventario.objects.get_or_create(producto=detalle.producto)
 			if creado:
 				inv.cantidad = detalle.cantidad
 				inv.producto = detalle.producto
