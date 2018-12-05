@@ -261,13 +261,15 @@ def form_orden_compra(request):
 			detalle.save()
 			#print(detalle.id)
 			#debemos aumentar el inventario del articulo
-			inv, creado = Inventario.objects.get_or_create(producto=detalle.producto)
+			inv, creado = Inventario.objects.get_or_create(producto=detalle.producto,defaults={'existencias':0,'zona': get_object_or_404(Zona,id=1) ,'producto': detalle.producto})
+			print(creado )
+			print('creado ', inv)
 			if creado:
-				inv.cantidad = detalle.cantidad
+				inv.existencias = detalle.cantidad
 				inv.producto = detalle.producto
 				inv.zona 	 = get_object_or_404(Zona,id=1)
 			else:
-				inv.cantidad = inv.cantidad +detalle.cantidad
+				inv.existencias = inv.existencias +detalle.cantidad
 			inv.save()
 			#se genera el movimiento
 			movimiento = Movimientos()

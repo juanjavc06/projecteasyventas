@@ -61,7 +61,7 @@ class Compras(models.Model):
 
 class  Compras_Detalle(models.Model):
 	compra 			= models.ForeignKey(Compras, on_delete=models.CASCADE)
-	producto 		= models.ForeignKey(Productos, on_delete=models.CASCADE)
+	producto  	= models.ForeignKey(Productos, on_delete=models.CASCADE)
 	cantidad 		= models.FloatField()
 	total_producto  = models.FloatField()
 
@@ -111,8 +111,6 @@ class Almacen(models.Model):
 	almacen 		= models.CharField(max_length=255)
 	
 	def __str__(self):
-
-
 		return str(self.almacen)
 
 class Zona(models.Model):
