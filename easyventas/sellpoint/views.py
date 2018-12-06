@@ -46,56 +46,41 @@ def generar_venta(request):
 		impuesto = float(request.POST.get("impuesto"))
 		subtotal = float(request.POST.get("subtotal"))
 		print(impuesto)
-		print(subtotal)
-		venta = Ventas(sub_total=float(subtotal),total=float(impuesto+subtotal),impuestos=impuesto,cliente=1)
+		print(objects)
+		venta = Ventas(sub_total=float(subtotal),total=float(impuesto+subtotal),impuestos=impuesto,cliente=get_object_or_404(Proveedores_Clientes,id=1))
 		venta.save()
 		for x in range(0,len(objects)):
 			print (objects[x])
 			print (objects[x]['descripcion'])
 			venta_detalle = Ventas_Detalle(
 				venta   	   = venta,
-				producto	   = objects[x]['id'],
+				producto	   = get_object_or_404(Productos,id=objects[x]['id']),
 				cantidad	   = objects[x]['cantidad'],
 				total_producto = (float(objects[x]['cantidad']) * float(objects[x]['precio']) )
 			)
 			venta_detalle.save()
+			#debemos crear el objeto inventario en caso de no existir
 			inv = Inventario.objects.filter(producto=objects[x]['id']).order_by('-id')[:1]
-			existencia = 0
-			if inv.count() == 1:
-				existencia = inv.existencias -  objects[x]['cantidad']
+			inv, creado = Inventario.objects.get_or_create(producto=venta_detalle.producto,defaults={'existencias':0,'zona': get_object_or_404(Zona,id=1) ,'producto': venta_detalle.producto})
+			if not creado:
+				inv.existencias = inv.existencias -  (float(objects[x]['cantidad']))
 			else:
 				#objects[x]['id']
-				producto = Productos.objects.filter(Q(id__icontains = id_))[1]
-				inventario = Inventario(
-					existencias = 0,
-					producto = producto,
-					zona = 1, 
+				producto = venta_detalle.producto
+				inv.existencias = 0,
+				inv.producto = producto,
+				inv.zona = get_object_or_404(Zona,id=1)
+				
+			inv.save()
+			movimiento = Movimientos(
+					tipo = "Venta",
+					producto = venta_detalle.producto.nombre,
+					cantidad = venta_detalle.cantidad,
+					zona=get_object_or_404(Zona,id=1)
 				)
-				inventario.save()
 			#return HttpResponse(request)
 	return HttpResponse(request)
-"""
-class Inventario(models.Model):
-	existencias 	= models.IntegerField()
-	producto  		= models.CharField(max_length=200)
-	zona 			= mode
 
-class Inventario(models.Model):
-	existencias 	= models.IntegerField()
-	producto  		= models.CharField(max_length=200)
-	zona 			= models.ForeignKey(Zona,on_delete=models.CASCADE,default=0)
-class Ventas(models.Model):
-	fecha 	 		= models.DateTimeField(auto_now_add=True)
-	sub_total		= models.FloatField()
-	impuestos 		= models.FloatField()
-	total 			= models.FloatField()
-class Ventas_Detalle(models.Model):
-	venta 			= models.ForeignKey(Ventas, on_delete=models.CASCADE)
-	producto 		= models.ForeignKey(Productos, on_delete=models.CASCADE)
-	cantidad 		= models.FloatField()
-	total_producto  = models.FloatField()
-
-"""
 
 def myview(request):
 	resp = HttpResponse(content_type='application/pdf')
