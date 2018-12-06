@@ -1,7 +1,7 @@
 <div class="nav-left-sidebar sidebar-dark">
     <div class="menu-list">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+          <a class="d-xl-none d-lg-none" href="{% url 'Dashboard' %}">Dashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -150,10 +150,13 @@
                                               <a class="nav-link" href="{% url 'reporte_productos' %}">Productos</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{%url 'reporte_ventas' %}">Compras</a>
+                                              <a class="nav-link" href="{%url 'reporte_compras' %}">Compras</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link" href="{%url 'reporte_compras'%}">Ventas</a>
+                                              <a class="nav-link" href="{%url 'reporte_ventas'%}">Ventas</a>
+                                            </li>
+                                             <li class="nav-item">
+                                              <a class="nav-link" href="{%url 'reporte_inventario'%}">Inventario</a>
                                             </li>
                                           </ul>
                                         </div>

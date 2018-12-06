@@ -82,11 +82,6 @@ def generar_venta(request):
 	return HttpResponse(request)
 
 
-def myview(request):
-	resp = HttpResponse(content_type='application/pdf')
-	queryset = Productos.objects.all()
-	context = {	'productos':queryset}
-	return generate_pdf('reportes/reporte_productos.html', file_object=resp,context=context)
 
 def form_categorias_view(request):
 	form = FormCategoria_Productos(request.POST)
@@ -147,6 +142,13 @@ class form_productos_editar(generic.UpdateView):
     model = Productos
     fields = '__all__'
     success_url = '../../../productos/buscar/'
+
+def contadorProductos(request):
+	queryset = Productos.all()
+	len(queryset)
+	for obj in queryset:
+		pass 
+
 		
 #-----------------PROVEEDORES---------------
 def form_proveedores_view(request):
@@ -398,3 +400,18 @@ def ReporteVentas(request):
 	queryset = Ventas.objects.all()
 	context= {'ventas': queryset}
 	return generate_pdf('reportes/reporte_ventas.html',file_object=resp,context=context)
+
+def MasVendidos(request):
+	resp=HttpResponse(content_type="application/pdf")
+	queryset = Ventas_Detalle.objects.all().order_by('total_producto')
+	context= {'masvendido': queryset}
+	return generate_pdf('reportes/productos_mas_vendidos.html',file_object=resp,context=context)
+
+
+
+
+def ReporteInventario(request):
+	resp = HttpResponse(content_type="application/pdf")
+	queryset = Inventario.objects.all()
+	context= {'inventario': queryset}
+	return generate_pdf('reportes/reporte_inventario.html',file_object=resp,context=context)

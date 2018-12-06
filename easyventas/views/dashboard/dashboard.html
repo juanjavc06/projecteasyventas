@@ -51,7 +51,7 @@
                             <div class="card-body">
                                 <h5 class="text-muted">Ventas</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1 text-primary" >0</h1>
+                                    <h1 class="mb-1 text-primary" >4</h1>
                                 </div>
                                 
                             </div>
@@ -65,7 +65,7 @@
                             <div class="card-body">
                                 <h5 class="text-muted">Ordenes</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1 text-primary">0 </h1>
+                                    <h1 class="mb-1 text-primary">5 </h1>
                                 </div>
                                 
                             </div>
@@ -79,7 +79,8 @@
                             <div class="card-body">
                                 <h5 class="text-muted">Productos</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1 text-primary"> 39
+                                    <h1 class="mb-1 text-primary" > 39
+
                                     </h1>
                                 </div>
                                 
@@ -94,46 +95,36 @@
                     <!-- ============================================================== -->
                         <!-- basic table -->
                         <!-- ============================================================== -->
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Basic Table</h5>
+                                <h5 class="card-header">Ventas</h5>
                                 <div class="card-body">
                                     <table class="table">
-                                        <thead>
+                                        
                                             <thead>
                                                 <tr>
-                                                    <th> fecha        </th>
-                                                    <th> impuestos    </th>
-                                                    <th> total        </th>
-                                                    <th> fecha_entrega</th>
-                                                    <th> proveedor    </th>
+                                                    <th> Fecha           </th>
+                                                    <th> Total           </th>
+                                                    <th> Fecha de Entrega</th>
+                                                    <th> proveedor       </th>
 
                                                 </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
+                                                {% for f in ventas %}
+                                                    <td>{{ f.fecha         }}   </td>
+                                                    <td>{{ f.total         }}   </td>
+                                                    <td>{{ f.fecha_entrega }}   </td>
+                                                    <td>{{ f.proveedor     }}   </td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>@twitter</td>
-                                            </tr>
+                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+
                         <!-- ============================================================== -->
                         <!-- end basic table -->
                         <!-- ============================================================== -->

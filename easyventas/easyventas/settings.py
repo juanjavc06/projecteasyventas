@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sellpoint',
         'USER': 'root',
-        'PASSWORD': 'root123',
+        'PASSWORD': 'llamas',
         'HOST': 'localhost',
         'PORT': '3306',
     }
