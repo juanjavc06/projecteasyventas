@@ -79,8 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sellpoint',
-        'USER': 'root',
-        'PASSWORD': 'llamas',
+        #'USER': 'root',
+        #'PASSWORD': 'llamas',
+        'USER': 'master',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }

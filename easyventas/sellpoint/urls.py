@@ -4,13 +4,8 @@ from sellpoint import views
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-
-    path('login/', views.login ,name="login"),
-
-    path('dashboard/', views.index ,name="dashboard"),
-
-
-    path('', views.index),
+    
+    path('', views.index,name="dashboard"),
     #PUNTO DE VENTA
     path('sellpoint/', views.startSellPoint,name="sellpoint"),
     path('sellpoint/comprar', csrf_exempt(views.generar_venta),name="sellpoint_comprar"),

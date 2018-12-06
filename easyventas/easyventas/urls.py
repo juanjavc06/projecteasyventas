@@ -19,9 +19,8 @@ from sellpoint import views
 from sellpoint import urls as sellpoint_urls
 
 urlpatterns = [
-    path('login/', views.login ,name="index"),
-    path('dashboard',include(sellpoint_urls)),
+    path('', views.login,name="login"),
+    path('logout/', views.login,name="logout"),
+    path('dashboard/',include(sellpoint_urls)),
     path('admin/',admin.site.urls),
-    path('',include(sellpoint_urls)),
-
 ]
