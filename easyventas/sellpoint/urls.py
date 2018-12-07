@@ -60,6 +60,9 @@ urlpatterns = [
     path('reporte/inventario/',views.ReporteInventario,name="reporte_inventario"),
     path('reporte/productos/masvendidos',views.MasVendidos,name="reporte_productos_masvendidos"),
 
+    #corte
+    path('corte/consultar/',views.consultarCorte,name = 'consultar_corte'),
+
 ]
 
 #pip install django-widget-tweaks

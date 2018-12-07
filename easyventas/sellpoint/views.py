@@ -7,12 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login as logearse
 
 from .models  import *
 from .forms   import *
 from .reports import * 
 
+import datetime
 import json
 # Create your views here. 
 
@@ -33,7 +34,7 @@ def login(request):
 		cantidad = request.POST.get("password")
 		user = authenticate(username=username, password=cantidad)
 		if user is not None:
-			login(request, user)
+			logearse(request, user)
 			# A backend authenticated the credentials
 			return redirect('dashboard')
 		else:
@@ -502,3 +503,23 @@ def ReporteInventario(request):
 		return generate_pdf('reportes/reporte_inventario.html',file_object=resp,context=context)
 	else:
 		return render(request, "forms/login.html",{"msg":"session"} )
+
+
+
+#------------CORTE DE CAJA
+
+def consultarCorte(request):
+	#validamos que exista algun corte para tomar esa fecha
+	fechaInicial = Corte.objects.all().order_by('-fecha')[:1]
+	print(fechaInicial)
+	if not fechaInicial:
+		fechaInicial =  datetime.date.today()
+		print(fechaInicial)
+	else :
+		fechaInicial = fechaInicial.fecha
+	print(fechaInicial)
+	ventas = Ventas.objects.filter(fecha__icontains = fechaInicial)
+	print(ventas)
+
+	return render(request,"dashboard/form_corte.html",{'ventas':ventas})
+
