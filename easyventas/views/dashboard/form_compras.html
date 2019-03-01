@@ -1,0 +1,276 @@
+{% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Orden de Compra</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ecommerce-widget">
+              <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="card">
+
+                            <h5 class="card-header" id="producto_id"> Orden de compra </h5>
+                        </div>
+                    </div>
+
+                      <div class="form-group">
+                        <label for="input-select">Proveedor:</label>
+                        {{ form.proveedor|add_class:"form-control"|attr:"type:text" }}
+                      </div>
+                      <div class="form-group">
+                        <label for="input-select">Fecha de Entrega:</label>
+                        {{ form.fecha_entrega|add_class:"form-control"|attr:"type:date"|attr:"title:YYYY-MM-DD"}}
+                      </div>
+                      
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">S
+                      <div class="card">
+                            <h5 class="card-header">Detalles</h5>
+                            <div class="card-body">
+                              <table  id="tabla_lista" class="table table-white table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Producto</th>
+                                    <th>Descripcion</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th>Eliminar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  
+
+                              </tbody>
+                              </table>
+                            </div>
+                    </div>
+                      <button type="button" class="btn bt-sm btn-primary" data-toggle="modal"  data-target="#modal-info" onclick="buscar()">Agregar <i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-md-12 float-right">
+                      <button type="button" class="btn bt-sm btn-success" onclick="guardarOrdenCompra()">Generar</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                  <label class="">Sub-Total: </label>
+                   <input type="number" id="input-subtotal" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/>
+                  </div>
+                </div>
+               <div class="row">
+                  <div class="col-md">
+                  <label class="">Impuestos (%): </label>
+                   <input type="number" id="input-impuestos" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" onkeyup="total()"value="16"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                <label class="">Total: </label>
+                 <input type="number"id="input-total" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!------MODAL DE PROVEEDORES---->
+<div class="modal fade" id="modal-info" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <input id ="input_filtro_modal" onkeyup="buscar()" class="form-control" type="text" placeholder="Buscar..">
+        <h5 class="modal-title" id="titulo-modal"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+              <div class="row">
+               <table id="tabla_lista_modal" class="table table-striped">
+                <thead>
+                   <th>Producto</th>
+                   <th>Descripcion</th>
+                   <th>Precio</th>
+                   <th>Accion</th>
+                 </thead>
+                 <tbody>
+                   
+                 </tbody>
+               </table>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  
+function buscar(){
+    var busqueda = document.getElementById('input_filtro_modal').value;
+    var x = new XMLHttpRequest();
+    x.open('GET','/productos/buscar/?filtro='+ busqueda)
+    x.onreadystatechange = function (e){
+
+      if(x.readyState == 4){
+
+        if(x.status === 200){
+
+          x.addEventListener('load', function(e){
+              var json = JSON.parse(x.responseText.replace(/\'/g,'"'));
+
+                  //llenamos la tabla
+                  llenarTabla(json);
+          });
+        }
+      }
+     }
+    x.send();
+  }
+
+
+function llenarTabla(data){
+    var cuerpo = document.getElementById('tabla_lista_modal').children[1];
+    cuerpo.innerHTML = ''; //limpiamos la tabla
+
+    for (var i = 0; i < data.length; i++) {
+  var tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+ data[i].nombre +'</td>'  +
+        '<td>'+ data[i].descripcion +'</td>'  +
+        '<td>$'+ data[i].precio +'</td>'  +
+        '<td><a class="btn btn-success text-white" onclick="seleccionarProducto(this)" data-dismiss="modal" >Seleccionar </a></td>' 
+      cuerpo.appendChild(tr);
+
+      
+      
+    }
+
+  }
+function seleccionarProducto(boton){
+var nombre = boton.parentNode.parentNode.children[0].textContent;
+var descripcion = boton.parentNode.parentNode.children[1].textContent;
+var precio = boton.parentNode.parentNode.children[2].textContent.replace('$','');
+var tablaCuerpo = document.getElementById('tabla_lista').children[1];
+var tr = document.createElement('tr');
+    tr.id = "0"
+        tr.innerHTML = 
+        '<td>'+ nombre +'</td>'  +
+        '<td>'+ descripcion +'</td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" readonly value="'+ precio +'"/></td>'  +
+        '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="1" oninput="sumar(this)" value="0"/></td>'  +
+         '<td>$<input type="number" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" readonly value="0"/></td>'  +
+        '<td><a class="btn btn-secondary text-white" onclick="removerProducto(this)" >Eliminar </a></td>'  
+        tablaCuerpo.appendChild(tr);
+
+}
+
+function removerProducto(boton){
+var trEliminar = boton.parentNode.parentNode;
+document.getElementById('tabla_lista').children[1].removeChild(tr);
+}
+
+function guardarOrdenCompra() {
+  //serializamos el json para guardar todos
+var tablaDetalles = document.getElementById('tabla_lista').children[1]
+var json ="[";
+  for (var i = 0; i < tablaDetalles.childElementCount; i++) {
+    json += (i==0)?'{':',{';
+    json += '"id":'+tablaDetalles.children[i].id +',';
+    json += '"producto":"'+ tablaDetalles.children[i].children[0].textContent +'",';
+    json += '"cantidad":'+ tablaDetalles.children[i].children[3].children[0].value +',';
+    json += '"total_detalle":'+ tablaDetalles.children[i].children[4].children[0].value +'';
+    json += '}';
+  }
+  json+="]"
+
+
+var x = new XMLHttpRequest();
+var subtotal= parseFloat(document.getElementById('input-subtotal').value);
+var impuestos = parseFloat(document.getElementById('input-impuestos').value);
+var total = parseFloat(document.getElementById('input-total').value);
+var fechaEntrega = document.getElementById('id_fecha_entrega').value;
+var proveedor = document.getElementById('id_proveedor')
+var proveedorRFC  = proveedor.options[proveedor.selectedIndex].text;
+
+//informacion de la compra
+var frmd = new FormData()
+frmd.append('subtotal',subtotal)
+frmd.append('impuestos',impuestos)
+frmd.append('total',total)
+frmd.append('fechaEntrega',fechaEntrega)
+frmd.append('proveedorRFC',proveedorRFC)
+
+frmd.append('detalles',json)
+    x.open('POST',"{% url 'nueva_orden_compra' %}");
+    x.onreadystatechange = function (e){
+      if(x.readyState == 4){
+        if(x.status === 200){
+          x.addEventListener('load', function(e){
+              var json = x.responseText.replace(/\'/g,'"');
+
+                  //llenamos la tabla
+                  console.log(json);
+          });
+        }
+      }
+     }
+    x.send(frmd);
+
+
+}
+
+function sumar(input){
+var tr = input.parentNode.parentNode;
+var precio = tr.children[2].children[0].value;
+
+var cantidad = input.value;
+var totalProducto = precio*cantidad;
+tr.children[4].children[0].value = totalProducto;
+
+//tabla con  los detalles y calculo de subtotal
+var tabla = document.getElementById('tabla_lista').children[1];
+
+var subtotal = 0;
+for (var i = 0; i < tabla.childElementCount; i++) {
+  subtotal += parseFloat(tabla.children[i].children[4].children[0].value);
+  }
+  document.getElementById('input-subtotal').value = subtotal;
+  total()
+
+}
+
+function total(){
+    var impuestos = parseFloat(document.getElementById('input-impuestos').value);
+    var subtotal= parseFloat(document.getElementById('input-subtotal').value);
+    var total = subtotal + (subtotal* (impuestos/100) );
+    document.getElementById('input-total').value = total;
+}
+
+
+</script>
+
+
+
+
+{% endblock %}

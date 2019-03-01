@@ -1,0 +1,35 @@
+{% extends "base_form.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="splash-container">
+    <div class="card ">
+        <div class="card-header text-center"><a href="{% url 'login' %}"></a><span class="splash-description">Ingresa tus Datos.</span></div>
+            {% if msg != None %}
+                {% if msg == "login" %}
+                <div class="alert alert-danger" role="alert" style="margin:5px">Error de Inicio de Sesion, verifique sus credenciales.</div>
+                {% endif %}
+                {% if msg == "session" %}
+                <div class="alert alert-danger" role="alert" style="margin:5px">Acceda a sus credenciales.</div>
+                {% endif %}
+            {% endif %}
+        <div class="card-body">
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control form-control-lg" name="username" id="username" type="text" placeholder="Usuario" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" name="password" id="password" type="password" placeholder="Contraseña">
+                </div>  
+                <div class="form-group">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Entrar</button>
+            </form>
+        </div>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

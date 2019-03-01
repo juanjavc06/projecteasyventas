@@ -1,0 +1,170 @@
+<div class="nav-left-sidebar sidebar-dark">
+    <div class="menu-list">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="d-xl-none d-lg-none" href="{% url 'dashboard' %}">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'sellpoint' %}">CAJA</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-lik" href="{% url 'consultar_corte' %}">CORTE CAJA</a>
+                    </li>
+                    <li class="nav-divider"> Catalogos </li>
+                    <!--- CATALOGOS-->
+                               <!--------------------------- PRODUCTOS----------------->
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-productos" aria-controls="submenu-1">
+                                          <i class="fas fa-dolly"></i>
+                                          Productos <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-productos" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'productos_nuevo' %}">Añadir Producto</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'producto_buscar' %}">Lista Productos</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+
+                                     <!-------------------------------- CATEGORIAS-->
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-categorias" aria-controls="submenu-1">
+                                          <i class="fa fa-folder"></i>
+                                          Categorias <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-categorias" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'categoria_nueva_view' %}">Añadir Categoria</a>
+                                            </li>
+
+                                          </ul>
+                                        </div>
+                                    </li>
+
+
+                                      <!--- PROVEEDORES------------------------>
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-proveedores" aria-controls="submenu-1">
+                                          <i class="fa fa-truck"></i>
+                                          Provedores/Clientes <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-proveedores" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'proveedor_nuevo' %}">Añadir Cliente/Proveedor</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'proveedores_buscar' %}">Lista Cliente/Proveedor</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </li>
+
+                                       <!--- COMPRAS------------------------>
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-compras" aria-controls="submenu-1">
+                                          <i class="fa fa-shopping-cart"></i>
+                                          Compras <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-compras" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'nueva_orden_compra' %}">Crear Orden Compra</a>
+                                            </li>
+                                          
+                                          </ul>
+                                        </div>
+                                      </li>
+
+                                       <!--- INVENTARIO------------------------>
+                                    <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-inventario" aria-controls="submenu-1">
+                                          <i class="fa fa-archive"></i>
+                                          Inventario <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-inventario" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'inventario_nuevo' %}">Añadir Inventario</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'inventario_buscar' %}">Lista Inventario</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+
+                                    
+
+                                     <!--- ZONAS------------------------>
+                                    <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-zonas" aria-controls="submenu-1">
+                                          <i class="fa fa-map-marker"></i>
+                                          Zonas <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-zonas" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'zona_nueva' %}">Añadir Zona</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'zona_buscar' %}">Lista Zona</a>
+                                            </li>
+                                            
+                                          </ul>
+                                        </div>
+                                    </li>
+
+                                    <!-- ALMACEN-->
+                                      <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-almacen" aria-controls="submenu-1">
+                                          <i class="fa fa-dolly-flatbed"></i>
+                                          Almacen <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-almacen" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'almacen_nuevo' %}">Añadir Almacen</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'almacen_buscar' %}">Lista Almacen</a>
+                                            </li>
+                                            
+                                          </ul>
+                                        </div>
+                                    </li>
+                                      <!--------------------------- REPORTES----------------->
+                                     <li class="nav-item ">
+                                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-reportes_productos" aria-controls="submenu-1">
+                                          <i class="fa fa-folder"></i>
+                                          Reportes <span class="badge badge-success">6</span>
+                                        </a>
+                                        <div id="submenu-reportes_productos" class="collapse submenu" style="">
+                                          <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{% url 'reporte_productos' %}">Productos</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{%url 'reporte_compras' %}">Compras</a>
+                                            </li>
+                                            <li class="nav-item">
+                                              <a class="nav-link" href="{%url 'reporte_ventas'%}">Ventas</a>
+                                            </li>
+                                             <li class="nav-item">
+                                              <a class="nav-link" href="{%url 'reporte_inventario'%}">Inventario</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                    </li>
+                        </div>
+                </nav>
+         </div>
+</div>

@@ -1,0 +1,66 @@
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+ 
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
+.qty{
+    display: inline;
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 50px;
+    text-align: center;
+}
+#car-shop td strong{
+    vertical-align: middle!important;
+    font-size: 30px!important;  
+}
+#car-shop button.btn{
+    font-size: 25px!important;
+}
+#car-shop button.btn.less-more{
+    padding: 2px 5px!important;
+    margin:5px!important;
+}
+#car-shop button.btn.delete-product{
+    padding: 5px 10px;
+}
+.nav-left-sidebar.sidebar-dark{right: 0px;width:350px;z-index: 5;}
+.navbar.navbar-expand-lg.navbar-light{display: block;margin:10px;}
+.product-input{width: 100%;display:block;}
+.product-input h3{text-align: center;}
+.product-input .table{width: 100%; display: block;}
+.product-input .table td{align-content: center;}
+.product-input .table td .btn{width: 55px; height: 55px;font-size:25px; margin: auto;}
+.product-input .table td .btn-rowspan{height: 120px!important;}
+.product-input .table td .btn-colspan{width: 120px!important;}
+
+.product-search .table .btn.btn-success{
+    padding: 2px 6px;
+    font-size: 20px;
+}
+
+#car-shop tr .form-group .input-group .btn{
+    max-width: 50px;
+    width: 35px;
+    max-height: 40px;
+    padding: 2px;
+    height: 35px;
+}
+#car-shop tr .form-group .input-group .unidad{
+    max-width: 30px;
+    padding:2px;
+    max-height: 35px;
+    text-align: center;
+}
+#car-shop tr .form-group .input-group .quantity{
+    max-width: 60px;
+    max-height: 35px;
+    text-align: center;
+}

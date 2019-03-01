@@ -1,0 +1,49 @@
+{% extends "base_dashboard.html" %}
+{% load widget_tweaks %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Editar Almacen</h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Almacen</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> Almacen</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+
+           <div class="card">
+                            <h5 class="card-header">Almacen</h5>
+                            <div class="card-body">
+                              <form method="POST" action="">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                  <label for="input-select">Nombre del Almacen:</label>
+                                  {{ form.almacen|add_class:"form-control"|attr:"type:text" }}
+                                </div>                          
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                  <button class="btn btn-primary" type="submit">Guardar</button>
+                                </div>
+                                
+                              </form>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

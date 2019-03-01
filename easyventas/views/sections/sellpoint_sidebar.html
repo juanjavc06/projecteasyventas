@@ -1,0 +1,105 @@
+<div class="nav-left-sidebar sidebar-dark" id="navbarNav">
+    <div class="menu-list">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="d-xl-none d-lg-none" href="{%url 'dashboard'%}">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span input="navbar-toggler-icon"></span>
+            </button>
+            <div class="product-input">
+              <h3>Id de Producto</h3>
+                <div class="form-group">
+                  <label class="col-form-label">#Codigo de Producto<br><span id="result_" style="color:white;"></span></label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="code-id-producto">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-primary fa fa-search">Buscar!</button>
+                    </div>
+                  </div> 
+                </div>
+              <table class="table" id="calculator_data" style="display:none;">
+                <tbody>
+                  <tr>
+                    <td colspan="2">
+                      <button type="button" name="clean" class="btn btn-rounded btn-dark btn-colspan">Limpiar</button>
+                    </td>
+                    <td>
+                      <button type="button" name="mult" class="btn btn-rounded btn-dark">x</button>
+                    </td>
+                    <td>
+                      <button type="button" name="sub" class="btn btn-rounded btn-dark">-</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button type="button" name="number" data-value="1" class="btn btn-rounded btn-dark">1</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="2" class="btn btn-rounded btn-dark">2</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="3" class="btn btn-rounded btn-dark">3</button>
+                    </td>
+                    <td rowspan="2">
+                      <button type="button" name="plus"  class="btn btn-rounded btn-dark btn-rowspan">+</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button type="button" name="number" data-value="4" class="btn btn-rounded btn-dark">4</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="5" class="btn btn-rounded btn-dark">5</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="6" class="btn btn-rounded btn-dark">6</button>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td>
+                      <button type="button" name="number" data-value="7" class="btn btn-rounded btn-dark">7</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="8" class="btn btn-rounded btn-dark">8</button>
+                    </td>
+                    <td>
+                      <button type="button" name="number" data-value="9" class="btn btn-rounded btn-dark">9</button>
+                    </td>
+                    <td rowspan="2">
+                      <button type="button" name="equal" class="btn btn-rounded btn-dark btn-rowspan">=</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <button type="button" name="number" data-value="0" class="btn btn-rounded btn-dark btn-colspan">0</button>
+                    </td>
+                    <td>
+                      <button type="button" name="point" class="btn btn-rounded btn-dark">.</button>
+                    </td> 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="clear: both;"></div>
+            <div class="product-search">
+              <h3>Productos</h3>
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">#ID</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <th scope="row">1</th>
+                          <td id="nombre_vista">Gansito</td>
+                          <td id="descripcion_vista">Pastelillo de chocolate</td>
+                      </tr>
+                  </tbody>
+              </table>
+           </div>
+        </nav>
+    </div>
+</div>

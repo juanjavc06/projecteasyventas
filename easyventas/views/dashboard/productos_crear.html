@@ -1,0 +1,85 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Crear Producto</h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Productos</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Crear Producto</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+
+            	{% if form %}
+
+            	<form class="form" method="POST"  action="" >
+				{% csrf_token %}
+				
+ 			<div class="row">
+                <div class="col">
+                    <h3><span class="label label-primary">Nombre: </span></h3>
+                     {{form.nombre}} 
+                </div>
+
+                <div class="col">
+                    <h3>
+                        <span class="label label-primary"> Descripcion :</span>
+                        {{form.descripcion}}    
+                    </h3>
+                </div>  
+                 
+            </div>
+				
+
+			<div class="row">
+				<div class="col">
+					<h3><span class="label label-primary">Unidad de Medida: </span></h3>
+					  {{form.unidad_medida}}
+				</div>
+
+				<div class="col">
+					<h3><span class="label label-primary">Inv. minimo: </span></h3>
+						{{form.inventario_minimo}}
+				</div>
+				
+				<div class="col">
+					<h3><span class="label label-primary"> Inv. maximo </span></h3>
+					{{form.inventario_maximo}}
+				</div>
+				
+				<div class="col">
+					<h3><span class="label label-primary">Precio: </span></h3>
+					  {{form.precio}}
+				</div>
+				
+
+			</div> 
+
+            </div>
+
+				    <button type="submit" class="btn btn-primary" value="">Crear</button>
+				</form>
+
+            	{% endif%}
+        </div>
+    </div>
+</div>
+{% endblock %}
