@@ -36,7 +36,7 @@ def login(request):
 		if user is not None:
 			logearse(request, user)
 			# A backend authenticated the credentials
-			return redirect('dashboard')
+			return index(request)
 		else:
 			# No backend authenticated the credential
 			return render(request, "forms/login.html",{"msg":"login"} )
